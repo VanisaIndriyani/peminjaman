@@ -108,12 +108,7 @@
                                 </form>
                                 @endif
                                 @if(strtolower($peminjaman->status) === 'disetujui')
-                                <form method="POST" action="{{ route('admin.peminjaman.pengembalianManual', $peminjaman->id) }}" class="action-form">
-                                    @csrf
-                                    <button type="submit" class="btn-return" title="Pengembalian Manual" onclick="return confirm('Yakin ingin melakukan pengembalian manual?')">
-                                        <i class="fa fa-box-open"></i>
-                                    </button>
-                                </form>
+                               
                                 @endif
                             </div>
                         </td>

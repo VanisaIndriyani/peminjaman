@@ -20,7 +20,7 @@
             <i class="fa fa-search search-icon"></i>
             <input id="searchMobil" type="text" placeholder="Cari mobil, merk, plat nomor..." class="search-input">
         </div>
-    </div>
+</div>
 
     <!-- Table Section -->
     <div class="table-container">
@@ -37,10 +37,10 @@
                         <th class="col-status">Status</th>
                         <th class="col-foto">Foto</th>
                         <th class="col-aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($mobils as $mobil)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($mobils as $mobil)
                     <tr class="table-row">
                         <td class="col-no">{{ $loop->iteration }}</td>
                         <td class="col-nama">
@@ -57,51 +57,51 @@
                             <span class="price">Rp {{ number_format($mobil->harga_sewa,0,',','.') }}</span>
                         </td>
                         <td class="col-status">
-                            @php
-                                $status = strtolower($mobil->status);
+                @php
+                    $status = strtolower($mobil->status);
                                 $statusClass = '';
-                                if ($status === 'dipinjam') {
+                    if ($status === 'dipinjam') {
                                     $statusClass = 'status-rented';
-                                } elseif ($status === 'tersedia') {
+                    } elseif ($status === 'tersedia') {
                                     $statusClass = 'status-available';
-                                } else {
+                    } else {
                                     $statusClass = 'status-other';
-                                }
-                            @endphp
+                    }
+                @endphp
                             <span class="status-badge {{ $statusClass }}">
                                 {{ ucfirst($mobil->status) }}
                             </span>
-                        </td>
+            </td>
                         <td class="col-foto">
-                            @if($mobil->foto)
+                @if($mobil->foto)
                                 <div class="image-container">
                                     <img src="{{ asset('storage/mobil/'.$mobil->foto) }}" alt="Foto {{ $mobil->nama }}" class="mobil-image">
                                 </div>
-                            @else
+                @else
                                 <div class="no-image">
                                     <i class="fa fa-image"></i>
                                 </div>
-                            @endif
-                        </td>
+                @endif
+            </td>
                         <td class="col-aksi">
                             <div class="action-buttons">
                                 <a href="{{ route('mobil.edit', $mobil->id) }}" class="btn-edit" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <form action="{{ route('mobil.destroy', $mobil->id) }}" method="POST" class="delete-form">
-                                    @csrf
-                                    @method('DELETE')
+                    @csrf
+                    @method('DELETE')
                                     <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus mobil ini?')">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                </form>
+                </form>
                             </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+</div>
     </div>
 </div>
 

@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    @if($pesans->isEmpty())
+@if($pesans->isEmpty())
     <!-- Empty State -->
     <div class="empty-state">
         <div class="empty-icon">
@@ -29,7 +29,7 @@
         <h3 class="empty-title">Belum ada pesan masuk</h3>
         <p class="empty-description">Pesan dari pengunjung akan muncul di sini</p>
     </div>
-    @else
+@else
     <!-- Messages Section -->
     <div class="messages-section">
         <!-- Filter Section -->
@@ -69,10 +69,10 @@
                             <th class="col-time">Waktu</th>
                             <th class="col-status">Status</th>
                             <th class="col-aksi">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($pesans as $pesan)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($pesans as $pesan)
                         <tr class="table-row message-row" data-id="{{ $pesan->id }}">
                             <td class="col-no">{{ $loop->iteration }}</td>
                             <td class="col-sender">
@@ -129,15 +129,15 @@
                                         <i class="fa fa-reply"></i>
                                     </button>
                                 </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
             </div>
         </div>
-    </div>
-    @endif
+</div>
+@endif
 </div>
 
 <!-- Message Detail Modal -->

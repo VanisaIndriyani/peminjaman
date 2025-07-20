@@ -23,11 +23,11 @@
                 </div>
                 <div class="user-profile">
                     <div class="user-avatar">
-                        @if($peminjaman->user && $peminjaman->user->foto)
+            @if($peminjaman->user && $peminjaman->user->foto)
                             <img src="{{ asset('storage/profile/'.$peminjaman->user->foto) }}" alt="Foto {{ $peminjaman->user->name }}">
-                        @else
+            @else
                             <i class="fa fa-user-circle"></i>
-                        @endif
+            @endif
                     </div>
                     <div class="user-details">
                         <h3 class="user-name">{{ $peminjaman->user->name ?? '-' }}</h3>
@@ -72,39 +72,39 @@
                     <div class="detail-item">
                         <span class="label">Tanggal Pinjam:</span>
                         <span class="value">{{ $peminjaman->tanggal_pinjam }}</span>
-                    </div>
+        </div>
                     <div class="detail-item">
                         <span class="label">Tanggal Kembali:</span>
                         <span class="value">{{ $peminjaman->tanggal_kembali }}</span>
-                    </div>
+        </div>
                     <div class="detail-item">
                         <span class="label">Status:</span>
-                        @php
-                            $status = strtolower($peminjaman->status);
-                            if ($status === 'menunggu_pembayaran') {
+                @php
+                    $status = strtolower($peminjaman->status);
+                    if ($status === 'menunggu_pembayaran') {
                                 $statusClass = 'status-waiting';
                                 $icon = 'fa-clock';
-                            } elseif ($status === 'disetujui') {
+                    } elseif ($status === 'disetujui') {
                                 $statusClass = 'status-approved';
                                 $icon = 'fa-thumbs-up';
-                            } elseif ($status === 'ditolak') {
+                    } elseif ($status === 'ditolak') {
                                 $statusClass = 'status-rejected';
                                 $icon = 'fa-times-circle';
                             } elseif ($status === 'dipinjam') {
                                 $statusClass = 'status-rented';
                                 $icon = 'fa-car-side';
-                            } elseif ($status === 'kembali') {
+                    } elseif ($status === 'kembali') {
                                 $statusClass = 'status-returned';
                                 $icon = 'fa-check-circle';
-                            } else {
+                    } else {
                                 $statusClass = 'status-other';
                                 $icon = 'fa-info-circle';
-                            }
-                        @endphp
+                    }
+                @endphp
                         <span class="status-badge {{ $statusClass }}">
                             <i class="fa {{ $icon }}"></i>
                             {{ ucfirst($peminjaman->status) }}
-                        </span>
+                </span>
                     </div>
                 </div>
             </div>
@@ -207,8 +207,8 @@
                                 <span>Tidak ada dokumen</span>
                             </div>
                         @endif
-                    </div>
-                </div>
+        </div>
+    </div>
             </div>
 
             <!-- Actions Card -->
@@ -216,11 +216,11 @@
                 <div class="card-header">
                     <i class="fa fa-cogs"></i>
                     <span>Aksi</span>
-                </div>
+        </div>
                 <div class="actions-content">
-                    @if(in_array(strtolower($peminjaman->status), ['menunggu_pembayaran','menunggu']))
+        @if(in_array(strtolower($peminjaman->status), ['menunggu_pembayaran','menunggu']))
                         <form method="POST" action="{{ route('admin.peminjaman.aksi', $peminjaman->id) }}" class="action-form">
-                            @csrf
+            @csrf
                             <div class="action-buttons">
                                 <button name="aksi" value="disetujui" type="submit" class="btn-approve">
                                     <i class="fa fa-check-circle"></i>
@@ -231,18 +231,18 @@
                                     Tolak
                                 </button>
                             </div>
-                        </form>
-                    @endif
+        </form>
+        @endif
 
-                    @if(strtolower($peminjaman->status) === 'dipinjam')
+        @if(strtolower($peminjaman->status) === 'dipinjam')
                         <form method="POST" action="{{ route('admin.peminjaman.pengembalianManual', $peminjaman->id) }}" class="action-form">
-                            @csrf
+            @csrf
                             <button type="submit" class="btn-return">
                                 <i class="fa fa-box-open"></i>
                                 Pengembalian Manual
-                            </button>
-                        </form>
-                    @endif
+            </button>
+        </form>
+        @endif
                 </div>
             </div>
         </div>

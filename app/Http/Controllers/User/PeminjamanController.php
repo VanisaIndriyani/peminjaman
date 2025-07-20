@@ -12,10 +12,25 @@ class PeminjamanController extends Controller
 {
     public function create(Request $request)
     {
+        // Pastikan user sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk melakukan peminjaman.');
+        }
+        
         $mobil = null;
         if ($request->has('mobil')) {
             $mobil = Mobil::find($request->mobil);
+            
+            // Cek apakah mobil ada dan tersedia
+            if (!$mobil) {
+                return redirect()->route('katalog')->with('error', 'Mobil tidak ditemukan.');
+            }
+            
+            if (strtolower($mobil->status) !== 'tersedia') {
+                return redirect()->route('katalog')->with('error', 'Mobil tidak tersedia untuk disewa.');
+            }
         }
+        
         return view('user.peminjaman.create', compact('mobil'));
     }
 

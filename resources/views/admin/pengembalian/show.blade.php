@@ -60,9 +60,9 @@
                     <span class="label">Tahun:</span>
                     <span class="value">{{ $pengembalian->peminjaman->mobil->tahun ?? '-' }}</span>
                 </div>
-            </div>
-        </div>
-
+    </div>
+    </div>
+   
         <!-- Return Info Card -->
         <div class="info-card">
             <div class="card-header">
@@ -76,20 +76,20 @@
                 </div>
                 <div class="detail-item">
                     <span class="label">Status:</span>
-                    @php
-                        $status = strtolower($pengembalian->status);
+        @php
+            $status = strtolower($pengembalian->status);
                         if ($status === 'selesai') {
                             $statusClass = 'status-completed';
                             $icon = 'fa-check-circle';
-                        } else {
+            } else {
                             $statusClass = 'status-processing';
                             $icon = 'fa-hourglass-half';
-                        }
-                    @endphp
+            }
+        @endphp
                     <span class="status-badge {{ $statusClass }}">
                         <i class="fa {{ $icon }}"></i>
                         {{ ucfirst($pengembalian->status) }}
-                    </span>
+        </span>
                 </div>
             </div>
         </div>

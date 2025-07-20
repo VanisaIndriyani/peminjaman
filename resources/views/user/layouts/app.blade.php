@@ -478,18 +478,18 @@
 <body>
     <header>
         <nav>
-            <a href="/beranda" class="nav-logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:10px;">
+            <a href="{{ url('/beranda') }}" class="nav-logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:10px;">
                 <i class="fa fa-car" style="font-size:2rem;color:#3b82f6;"></i>
                 <span class="nav-logo-text" style="font-size:1.15rem;font-weight:700;letter-spacing:0.5px;">MD Rent Car</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="fa fa-bars"></i></button>
             <div class="nav-group" id="navGroup">
-                <a href="/beranda" data-aos="fade-down" data-aos-delay="100"><i class="fa fa-home"></i> Beranda</a>
-                <a href="/tentang" data-aos="fade-down" data-aos-delay="200"><i class="fa fa-info-circle"></i> Tentang</a>
-                <a href="/katalog" data-aos="fade-down" data-aos-delay="300"><i class="fa fa-list"></i> Katalog</a>
-                <a href="/kontak" data-aos="fade-down" data-aos-delay="400"><i class="fa fa-phone"></i> Kontak</a>
+                <a href="{{ url('/beranda') }}" data-aos="fade-down" data-aos-delay="100"><i class="fa fa-home"></i> Beranda</a>
+                <a href="{{ url('/tentang') }}" data-aos="fade-down" data-aos-delay="200"><i class="fa fa-info-circle"></i> Tentang</a>
+                <a href="{{ url('/katalog') }}" data-aos="fade-down" data-aos-delay="300"><i class="fa fa-list"></i> Katalog</a>
+                <a href="{{ url('/kontak') }}" data-aos="fade-down" data-aos-delay="400"><i class="fa fa-phone"></i> Kontak</a>
                 @guest
-                    <a href="/login" data-aos="fade-down" data-aos-delay="500"><i class="fa fa-user"></i> Masuk</a>
+                    <a href="{{ url('/login') }}" data-aos="fade-down" data-aos-delay="500"><i class="fa fa-user"></i> Masuk</a>
                 @else
                     <div class="profile-dropdown-user">
                         <button id="profileBtnUser">
@@ -510,11 +510,11 @@
                             </div>
                             
                             <!-- Menu Items -->
-                            <a href="/riwayat">
+                            <a href="{{ url('/riwayat') }}">
                                 <i class="fa fa-history"></i>
                                 <span>Riwayat Peminjaman</span>
                             </a>
-                            <form method="POST" action="/logout" style="margin:0;">
+                            <form method="POST" action="{{ url('/logout') }}" style="margin:0;">
                                 @csrf
                                 <button type="submit">
                                     <i class="fa fa-sign-out-alt"></i>
@@ -526,15 +526,15 @@
                 @endguest
             </div>
             <div class="nav-mobile" id="navMobile" style="display:none;">
-                <a href="/beranda"><i class="fa fa-home"></i> Beranda</a>
-                <a href="/tentang"><i class="fa fa-info-circle"></i> Tentang</a>
-                <a href="/katalog"><i class="fa fa-list"></i> Katalog</a>
-                <a href="/kontak"><i class="fa fa-phone"></i> Kontak</a>
+                <a href="{{ url('/beranda') }}"><i class="fa fa-home"></i> Beranda</a>
+                <a href="{{ url('/tentang') }}"><i class="fa fa-info-circle"></i> Tentang</a>
+                <a href="{{ url('/katalog') }}"><i class="fa fa-list"></i> Katalog</a>
+                <a href="{{ url('/kontak') }}"><i class="fa fa-phone"></i> Kontak</a>
                 @guest
-                    <a href="/login"><i class="fa fa-user"></i> Masuk</a>
+                    <a href="{{ url('/login') }}"><i class="fa fa-user"></i> Masuk</a>
                 @else
-                    <a href="/riwayat"><i class='fa fa-history'></i> Riwayat Peminjaman</a>
-                    <form method="POST" action="/logout" style="margin:0;">
+                    <a href="{{ url('/riwayat') }}"><i class='fa fa-history'></i> Riwayat Peminjaman</a>
+                    <form method="POST" action="{{ url('/logout') }}" style="margin:0;">
                         @csrf
                         <button type="submit" style="background:none;border:none;padding:10px 24px;width:100%;text-align:left;color:#d32f2f;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;"><i class="fa fa-sign-out-alt"></i> Logout</button>
                     </form>
@@ -674,10 +674,10 @@
             <div style="flex:1 1 160px;min-width:160px;max-width:200px;" data-aos="fade-up" data-aos-delay="200">
                 <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;">Tautan Cepat</div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                    <a href="/beranda" style="color:#fff;text-decoration:none;">Beranda</a>
-                    <a href="/tentang" style="color:#fff;text-decoration:none;">Tentang</a>
-                    <a href="/katalog" style="color:#fff;text-decoration:none;">Katalog</a>
-                    <a href="/kontak" style="color:#fff;text-decoration:none;">Kontak</a>
+                    <a href="{{ url('/beranda') }}" style="color:#fff;text-decoration:none;">Beranda</a>
+                    <a href="{{ url('/tentang') }}" style="color:#fff;text-decoration:none;">Tentang</a>
+                    <a href="{{ url('/katalog') }}" style="color:#fff;text-decoration:none;">Katalog</a>
+                    <a href="{{ url('/kontak') }}" style="color:#fff;text-decoration:none;">Kontak</a>
                 </div>
             </div>
             <!-- Informasi Kontak -->

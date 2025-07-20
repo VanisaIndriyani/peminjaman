@@ -32,10 +32,10 @@
                         <th class="col-date">Tanggal Daftar</th>
                         <th class="col-status">Status</th>
                         <th class="col-aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($users as $user)
                     <tr class="table-row">
                         <td class="col-no">{{ $loop->iteration }}</td>
                         <td class="col-user">
@@ -90,10 +90,10 @@
                               
                             </div>
                         </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
         </div>
     </div>
 </div>

@@ -57,10 +57,10 @@
             <div class="filter-group">
                 <label for="filter" class="filter-label">Periode</label>
                 <select name="filter" id="filter" onchange="this.form.submit()" class="filter-select">
-                    <option value="hari" {{ request('filter','hari')=='hari'?'selected':'' }}>Hari Ini</option>
-                    <option value="minggu" {{ request('filter')=='minggu'?'selected':'' }}>Minggu Ini</option>
-                    <option value="bulan" {{ request('filter')=='bulan'?'selected':'' }}>Bulan Ini</option>
-                </select>
+        <option value="hari" {{ request('filter','hari')=='hari'?'selected':'' }}>Hari Ini</option>
+        <option value="minggu" {{ request('filter')=='minggu'?'selected':'' }}>Minggu Ini</option>
+        <option value="bulan" {{ request('filter')=='bulan'?'selected':'' }}>Bulan Ini</option>
+    </select>
             </div>
             <div class="filter-group">
                 <label for="keyword" class="filter-label">Pencarian</label>
@@ -69,26 +69,26 @@
             <div class="filter-group">
                 <label for="status" class="filter-label">Status</label>
                 <select name="status" id="status" class="filter-select">
-                    <option value="">-- Semua Status --</option>
-                    <option value="dipinjam" @if(request('status')=='dipinjam') selected @endif>Dipinjam</option>
-                    <option value="disetujui" @if(request('status')=='disetujui') selected @endif>Disetujui</option>
-                    <option value="kembali" @if(request('status')=='kembali') selected @endif>Kembali</option>
-                    <option value="ditolak" @if(request('status')=='ditolak') selected @endif>Ditolak</option>
-                </select>
+        <option value="">-- Semua Status --</option>
+        <option value="dipinjam" @if(request('status')=='dipinjam') selected @endif>Dipinjam</option>
+        <option value="disetujui" @if(request('status')=='disetujui') selected @endif>Disetujui</option>
+        <option value="kembali" @if(request('status')=='kembali') selected @endif>Kembali</option>
+        <option value="ditolak" @if(request('status')=='ditolak') selected @endif>Ditolak</option>
+    </select>
             </div>
             <div class="filter-actions">
                 <button type="submit" class="btn-filter">
                     <i class="fa fa-search"></i>
                     Cari / Filter
                 </button>
-                @if(request('keyword') || request('status'))
+    @if(request('keyword') || request('status'))
                 <a href="{{ route('laporan.index') }}" class="btn-reset">
                     <i class="fa fa-refresh"></i>
                     Reset
                 </a>
-                @endif
+    @endif
             </div>
-        </form>
+</form>
     </div>
 
     <!-- Peminjaman Report Section -->
@@ -111,10 +111,10 @@
                             <th class="col-date">Tanggal Pinjam</th>
                             <th class="col-date">Tanggal Kembali</th>
                             <th class="col-status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($peminjamans as $peminjaman)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($peminjamans as $peminjaman)
                         <tr class="table-row">
                             <td class="col-no">{{ $loop->iteration }}</td>
                             <td class="col-user">
@@ -173,10 +173,10 @@
                                     {{ ucfirst($peminjaman->status) }}
                                 </span>
                             </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
             </div>
         </div>
     </div>
@@ -201,10 +201,10 @@
                             <th class="col-date">Tanggal Pengembalian</th>
                             <th class="col-denda">Denda</th>
                             <th class="col-status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($pengembalians as $pengembalian)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($pengembalians as $pengembalian)
                         <tr class="table-row">
                             <td class="col-no">{{ $loop->iteration }}</td>
                             <td class="col-user">
@@ -256,10 +256,10 @@
                                     {{ ucfirst($pengembalian->status) }}
                                 </span>
                             </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
             </div>
         </div>
     </div>

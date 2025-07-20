@@ -69,17 +69,17 @@
                 <i class="fa fa-exclamation-triangle" style="font-size:1.2rem;margin-top:2px;"></i>
                 <div>
                     <div style="font-weight:600;margin-bottom:8px;">Mohon perbaiki kesalahan berikut:</div>
-                    <ul style="margin:0;padding-left:18px;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+            <ul style="margin:0;padding-left:18px;">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
                 </div>
             </div>
         </div>
     @endif
     
-    <form method="POST" action="/peminjaman" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:24px;">
+    <form method="POST" action="{{ url('/peminjaman') }}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:24px;">
         @csrf
         <input type="hidden" name="mobil_id" value="{{ $mobil->id ?? '' }}">
         
@@ -187,7 +187,7 @@
                             <span class="file-text">Pilih SIM A</span>
                         </label>
                     </div>
-                </div>
+        </div>
                 
                 <!-- KTP Penjamin -->
                 <div class="file-upload-container" data-aos="fade-up" data-aos-delay="950">
@@ -204,9 +204,9 @@
                             <i class="fa fa-user-friends" style="margin-right:8px;color:#1976d2;"></i>
                             <span class="file-text">Pilih KTP Penjamin</span>
                         </label>
-                    </div>
-                </div>
-            </div>
+        </div>
+        </div>
+        </div>
         </div>
         
         <button type="submit" 

@@ -22,40 +22,40 @@
                 <div class="form-group">
                     <label for="nama" class="form-label">Nama Mobil</label>
                     <input type="text" id="nama" name="nama" value="{{ $mobil->nama }}" class="form-input" required>
-                </div>
+    </div>
 
                 <!-- Merk -->
                 <div class="form-group">
                     <label for="merk" class="form-label">Merk</label>
                     <input type="text" id="merk" name="merk" value="{{ $mobil->merk }}" class="form-input" required>
-                </div>
+    </div>
 
                 <!-- Tahun -->
                 <div class="form-group">
                     <label for="tahun" class="form-label">Tahun</label>
                     <input type="number" id="tahun" name="tahun" value="{{ $mobil->tahun }}" class="form-input" required min="1990" max="2099">
-                </div>
+    </div>
 
                 <!-- Plat Nomor -->
                 <div class="form-group">
                     <label for="plat_nomor" class="form-label">Plat Nomor</label>
                     <input type="text" id="plat_nomor" name="plat_nomor" value="{{ $mobil->plat_nomor }}" class="form-input" required>
-                </div>
+    </div>
 
                 <!-- Harga Sewa -->
                 <div class="form-group">
                     <label for="harga_sewa" class="form-label">Harga Sewa (Rp)</label>
                     <input type="number" id="harga_sewa" name="harga_sewa" value="{{ $mobil->harga_sewa }}" class="form-input" required>
-                </div>
+    </div>
 
                 <!-- Status -->
                 <div class="form-group">
                     <label for="status" class="form-label">Status</label>
                     <select id="status" name="status" class="form-select" required>
-                        <option value="tersedia" @if($mobil->status=='tersedia') selected @endif>Tersedia</option>
-                        <option value="dipinjam" @if($mobil->status=='dipinjam') selected @endif>Dipinjam</option>
-                    </select>
-                </div>
+            <option value="tersedia" @if($mobil->status=='tersedia') selected @endif>Tersedia</option>
+            <option value="dipinjam" @if($mobil->status=='dipinjam') selected @endif>Dipinjam</option>
+        </select>
+    </div>
             </div>
 
             <!-- Foto Mobil -->
@@ -91,7 +91,7 @@
                     Update Mobil
                 </button>
             </div>
-        </form>
+</form>
     </div>
 </div>
 

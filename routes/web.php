@@ -30,7 +30,7 @@ Route::get('/tentang', function () {
 Route::get('/katalog', function () {
     $mobils = Mobil::all();
     return view('user.katalog', compact('mobils'));
-});
+})->name('katalog');
 Route::get('/kontak', function () {
     return view('user.kontak');
 });

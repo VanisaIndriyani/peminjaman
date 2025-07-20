@@ -23,6 +23,7 @@
             display: flex;
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
         }
         
         /* Enhanced Sidebar Styling */
@@ -211,6 +212,8 @@
             margin-left: 280px;
             transition: all 0.3s ease;
             padding: 0 32px;
+            min-height: 100vh;
+            overflow-x: auto;
         }
         
         /* Enhanced Header */
@@ -230,6 +233,8 @@
             backdrop-filter: blur(10px);
             margin: 16px 0 24px 0;
             border-radius: 16px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
         
         .admin-header span {
@@ -439,6 +444,8 @@
             .sidebar {
                 transform: translateX(-100%);
                 width: 280px;
+                position: fixed;
+                z-index: 1000;
             }
             
             .sidebar.open {
@@ -448,6 +455,7 @@
             .main-content {
                 margin-left: 0;
                 padding: 0 20px;
+                width: 100%;
             }
             
             .admin-header {
@@ -476,12 +484,24 @@
             
             .main-content {
                 padding: 0 16px;
+                margin-left: 0;
+            }
+            
+            /* Table responsive */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .table-responsive table {
+                min-width: 600px;
             }
         }
         
         @media (max-width: 600px) {
             .main-content {
                 padding: 0 12px;
+                margin-left: 0;
             }
             
             .admin-header {
@@ -509,6 +529,39 @@
             
             .sidebar form {
                 margin: 12px;
+            }
+            
+            /* Mobile table adjustments */
+            .table-responsive table {
+                min-width: 500px;
+                font-size: 0.9rem;
+            }
+            
+            .table-responsive th,
+            .table-responsive td {
+                padding: 8px 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0 8px;
+            }
+            
+            .admin-header {
+                padding: 12px 16px;
+                margin: 4px 0 8px 0;
+            }
+            
+            /* Extra small table adjustments */
+            .table-responsive table {
+                min-width: 400px;
+                font-size: 0.8rem;
+            }
+            
+            .table-responsive th,
+            .table-responsive td {
+                padding: 6px 4px;
             }
         }
         
@@ -558,6 +611,79 @@
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
+        
+        /* Content flexibility */
+        .content-wrapper {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 0;
+        }
+        
+        .content-container {
+            min-width: 100%;
+            padding: 0;
+        }
+        
+        /* Table responsive improvements */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table-container table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+        }
+        
+        /* Card responsive */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        
+        /* Form responsive */
+        .form-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Responsive text */
+        .responsive-text {
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+        
+        .responsive-title {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -577,31 +703,31 @@
                 <span>MD Admin</span>
             </div>
             <nav>
-                <a href="/admin/dashboard" class="nav-link" data-aos="fade-right" data-aos-delay="100">
+                <a href="{{ url('/admin/dashboard') }}" class="nav-link" data-aos="fade-right" data-aos-delay="100">
                     <i class="fa fa-dashboard"></i> 
                     <span>Dashboard</span>
                 </a>
-                <a href="/admin/mobil" class="nav-link" data-aos="fade-right" data-aos-delay="150">
+                <a href="{{ url('/admin/mobil') }}" class="nav-link" data-aos="fade-right" data-aos-delay="150">
                     <i class="fa fa-car"></i> 
                     <span>Data Mobil</span>
                 </a>
-                <a href="/admin/peminjaman" class="nav-link" data-aos="fade-right" data-aos-delay="200">
+                <a href="{{ url('/admin/peminjaman') }}" class="nav-link" data-aos="fade-right" data-aos-delay="200">
                     <i class="fa fa-calendar-check"></i> 
                     <span>Peminjaman</span>
                 </a>
-                <a href="/admin/pengembalian" class="nav-link" data-aos="fade-right" data-aos-delay="250">
+                <a href="{{ url('/admin/pengembalian') }}" class="nav-link" data-aos="fade-right" data-aos-delay="250">
                     <i class="fa fa-undo"></i> 
                     <span>Pengembalian</span>
                 </a>
-                <a href="/admin/pengguna" class="nav-link" data-aos="fade-right" data-aos-delay="300">
+                <a href="{{ url('/admin/pengguna') }}" class="nav-link" data-aos="fade-right" data-aos-delay="300">
                     <i class="fa fa-users"></i> 
                     <span>Pengguna</span>
                 </a>
-                <a href="/admin/laporan" class="nav-link" data-aos="fade-right" data-aos-delay="350">
+                <a href="{{ url('/admin/laporan') }}" class="nav-link" data-aos="fade-right" data-aos-delay="350">
                     <i class="fa fa-file-alt"></i> 
                     <span>Laporan</span>
                 </a>
-                <a href="/admin/pesan" class="nav-link" data-aos="fade-right" data-aos-delay="400">
+                <a href="{{ url('/admin/pesan') }}" class="nav-link" data-aos="fade-right" data-aos-delay="400">
                     <i class="fa fa-envelope"></i> 
                     <span>Pesan Masuk</span>
                 </a>
@@ -628,7 +754,7 @@
                             <i class="fa fa-user"></i>
                             <span>Profil Saya</span>
                         </a>
-                        <form method="POST" action="/logout" style="margin: 0;">
+                        <form method="POST" action="{{ url('/logout') }}" style="margin: 0;">
                             @csrf
                             <button type="submit" class="dropdown-item logout-btn">
                                 <i class="fa fa-sign-out-alt"></i>
@@ -639,8 +765,10 @@
                 </div>
             </header>
             <main>
-                <div style="padding: 0 0 32px 0;">
-                    @yield('content')
+                <div class="content-wrapper" style="padding: 0 0 32px 0;">
+                    <div class="content-container">
+                        @yield('content')
+                    </div>
                 </div>
             </main>
         </div>
@@ -743,8 +871,48 @@
                 sidebarOverlay.classList.remove('open');
                 const icon = mobileMenuToggle.querySelector('i');
                 icon.className = 'fa fa-bars';
+                
+                // Reset main content margin
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    mainContent.style.marginLeft = '280px';
+                }
+            } else {
+                // Mobile view - remove margin
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    mainContent.style.marginLeft = '0';
+                }
             }
         });
+        
+        // Content scroll handler
+        function handleContentScroll() {
+            const contentWrapper = document.querySelector('.content-wrapper');
+            if (contentWrapper) {
+                // Add smooth scrolling to content
+                contentWrapper.style.scrollBehavior = 'smooth';
+            }
+        }
+        
+        // Initialize content scroll
+        handleContentScroll();
+        
+        // Handle table responsiveness
+        function handleTableResponsiveness() {
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => {
+                if (!table.closest('.table-container')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'table-container';
+                    table.parentNode.insertBefore(wrapper, table);
+                    wrapper.appendChild(table);
+                }
+            });
+        }
+        
+        // Initialize table responsiveness
+        handleTableResponsiveness();
         
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

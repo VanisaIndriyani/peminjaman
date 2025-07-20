@@ -32,6 +32,26 @@
         Pilih kendaraan premium favorit Anda untuk perjalanan yang tak terlupakan
     </div>
     
+    @if(session('error'))
+        <div style="background: linear-gradient(135deg, #fdecea 0%, #ffcdd2 100%); color: #b71c1c; padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #f44336; animation: fadeIn 0.5s ease;" 
+             data-aos="fade-up" data-aos-delay="350">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+    
+    @if(session('success'))
+        <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #1b5e20; padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #4caf50; animation: fadeIn 0.5s ease;" 
+             data-aos="fade-up" data-aos-delay="350">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa fa-check-circle" style="font-size: 1.2rem;"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
+    
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin-bottom: 40px;">
         @forelse($mobils as $index => $mobil)
         <div style="background: #fff; border-radius: 20px; box-shadow: 0 4px 20px rgba(26,35,126,0.08); padding: 0; display: flex; flex-direction: column; transition: all 0.4s ease; transform: translateY(0); overflow: hidden; position: relative;" 
@@ -42,7 +62,7 @@
             
             <!-- Image Section -->
             <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 24px; display: flex; justify-content: center; align-items: center; min-height: 160px; position: relative;">
-                @if($mobil->foto)
+            @if($mobil->foto)
                     <img src="{{ asset('storage/mobil/'.$mobil->foto) }}" alt="{{ $mobil->nama }}" 
                          style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; transition: all 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" 
                          onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" 
@@ -94,19 +114,28 @@
                 
                 <!-- Action Button -->
                 @if(strtolower($mobil->status) === 'tersedia')
-                    <a href="/peminjaman/create?mobil={{ $mobil->id }}" 
-                       style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
-                       onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(26,35,126,0.3)'" 
-                       onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(26,35,126,0.2)'">
-                        <i class="fa fa-car" style="margin-right: 8px;"></i>Sewa Sekarang
-                    </a>
-                @else
+                    @auth
+                        <a href="{{ url('/peminjaman/create?mobil=' . $mobil->id) }}" 
+                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
+                           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(26,35,126,0.3)'" 
+                           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(26,35,126,0.2)'">
+                            <i class="fa fa-car" style="margin-right: 8px;"></i>Sewa Sekarang
+                        </a>
+                    @else
+                        <a href="{{ url('/login') }}" 
+                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
+                           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(26,35,126,0.3)'" 
+                           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(26,35,126,0.2)'">
+                            <i class="fa fa-sign-in-alt" style="margin-right: 8px;"></i>Login untuk Sewa
+                        </a>
+                    @endauth
+            @else
                     <div style="background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-align: center; cursor: not-allowed; opacity: 0.8; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);" 
                          onmouseover="this.style.opacity='1';this.style.transform='translateY(-2px)'" 
                          onmouseout="this.style.opacity='0.8';this.style.transform='translateY(0)'">
                         <i class="fa fa-times-circle" style="margin-right: 8px;"></i>Tidak Tersedia
                     </div>
-                @endif
+            @endif
             </div>
         </div>
         @empty

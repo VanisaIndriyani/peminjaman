@@ -28,10 +28,10 @@
                         <th class="col-date">Tanggal Pengembalian</th>
                         <th class="col-status">Status</th>
                         <th class="col-aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pengembalians as $pengembalian)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($pengembalians as $pengembalian)
                     <tr class="table-row">
                         <td class="col-no">{{ $loop->iteration }}</td>
                         <td class="col-user">
@@ -61,21 +61,21 @@
                             </div>
                         </td>
                         <td class="col-status">
-                            @php
-                                $status = strtolower($pengembalian->status);
-                                if ($status === 'selesai') {
+                @php
+                    $status = strtolower($pengembalian->status);
+                    if ($status === 'selesai') {
                                     $statusClass = 'status-completed';
-                                    $icon = 'fa-check-circle';
-                                } else {
+                        $icon = 'fa-check-circle';
+                    } else {
                                     $statusClass = 'status-processing';
-                                    $icon = 'fa-hourglass-half';
-                                }
-                            @endphp
+                        $icon = 'fa-hourglass-half';
+                    }
+                @endphp
                             <span class="status-badge {{ $statusClass }}">
                                 <i class="fa {{ $icon }}"></i>
                                 {{ ucfirst($pengembalian->status) }}
-                            </span>
-                        </td>
+                </span>
+            </td>
                         <td class="col-aksi">
                             <div class="action-buttons">
                                 <a href="{{ route('pengembalian.show', $pengembalian->id) }}" class="btn-view" title="Lihat Detail">
@@ -83,18 +83,18 @@
                                 </a>
                                 @if(strtolower($pengembalian->status) !== 'selesai')
                                 <form method="POST" action="{{ route('admin.pengembalian.selesaikan', $pengembalian->id) }}" class="action-form">
-                                    @csrf
+                        @csrf
                                     <button type="submit" class="btn-complete" title="Selesaikan Pengembalian" onclick="return confirm('Yakin ingin menyelesaikan pengembalian ini?')">
                                         <i class="fa fa-check-circle"></i>
                                     </button>
-                                </form>
+                    </form>
                                 @endif
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
         </div>
     </div>
 </div>
