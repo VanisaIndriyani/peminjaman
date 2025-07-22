@@ -301,6 +301,22 @@ document.addEventListener('DOMContentLoaded', function() {
         gap: 20px !important;
     }
     
+    /* Header adjustments for mobile */
+    h1[style*="margin: 40px 0 24px 0"] {
+        margin: 20px 0 16px 0 !important;
+        font-size: 2rem !important;
+    }
+    
+    div[style*="margin-bottom: 50px"] {
+        margin-bottom: 30px !important;
+    }
+    
+    /* Alert adjustments for mobile */
+    div[style*="padding: 20px 24px"] {
+        padding: 16px 20px !important;
+        margin-bottom: 24px !important;
+    }
+    
     /* Card adjustments for mobile */
     div[style*="padding: 28px"] {
         padding: 20px !important;
@@ -332,6 +348,11 @@ document.addEventListener('DOMContentLoaded', function() {
     a[style*="padding: 16px 24px"], div[style*="padding: 16px 24px"] {
         padding: 14px 20px !important;
         font-size: 1rem !important;
+    }
+    
+    /* Empty state adjustments for mobile */
+    div[style*="padding: 80px 40px"] {
+        padding: 60px 20px !important;
     }
 }
 
