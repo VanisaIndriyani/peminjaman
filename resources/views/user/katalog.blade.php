@@ -7,89 +7,89 @@
 
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-    <h1 style="font-size: 2.5rem; color: #1a237e; font-weight: 800; margin-bottom: 16px; text-align: center;" data-aos="fade-down" data-aos-delay="200">
-        <i class="fa fa-car" style="margin-right: 12px; color: #1976d2;"></i>Katalog Mobil
+    <h1 style="font-size: 2.5rem; color: #1a237e; font-weight: 800; margin: 40px 0 24px 0; text-align: center;" data-aos="fade-down" data-aos-delay="200">
+        <i class="fa fa-car" style="margin-right: 16px; color: #1976d2;"></i>Katalog Mobil
     </h1>
-    <div style="color: #4b5563; text-align: center; font-size: 1.1rem; margin-bottom: 40px;" data-aos="fade-up" data-aos-delay="300">
+    <div style="color: #4b5563; text-align: center; font-size: 1.1rem; margin-bottom: 50px; line-height: 1.6;" data-aos="fade-up" data-aos-delay="300">
         Pilih kendaraan premium favorit Anda untuk perjalanan yang tak terlupakan
     </div>
     
     @if(session('error'))
-        <div style="background: linear-gradient(135deg, #fdecea 0%, #ffcdd2 100%); color: #b71c1c; padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #f44336; animation: fadeIn 0.5s ease;" 
+        <div style="background: linear-gradient(135deg, #fdecea 0%, #ffcdd2 100%); color: #b71c1c; padding: 20px 24px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #f44336; animation: fadeIn 0.5s ease;" 
              data-aos="fade-up" data-aos-delay="350">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <i class="fa fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
-                <span>{{ session('error') }}</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fa fa-exclamation-triangle" style="font-size: 1.3rem;"></i>
+                <span style="font-size: 1.05rem;">{{ session('error') }}</span>
             </div>
         </div>
     @endif
     
     @if(session('success'))
-        <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #1b5e20; padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #4caf50; animation: fadeIn 0.5s ease;" 
+        <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #1b5e20; padding: 20px 24px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #4caf50; animation: fadeIn 0.5s ease;" 
              data-aos="fade-up" data-aos-delay="350">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <i class="fa fa-check-circle" style="font-size: 1.2rem;"></i>
-                <span>{{ session('success') }}</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fa fa-check-circle" style="font-size: 1.3rem;"></i>
+                <span style="font-size: 1.05rem;">{{ session('success') }}</span>
             </div>
         </div>
     @endif
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin-bottom: 40px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 40px;">
         @forelse($mobils as $index => $mobil)
         <div style="background: #fff; border-radius: 20px; box-shadow: 0 4px 20px rgba(26,35,126,0.08); padding: 0; display: flex; flex-direction: column; transition: all 0.4s ease; transform: translateY(0); overflow: hidden; position: relative;" 
              data-aos="fade-up" 
              data-aos-delay="{{ ($index + 1) * 100 }}"
-             onmouseover="this.style.transform='translateY(-12px) scale(1.02)';this.style.boxShadow='0 20px 60px rgba(26,35,126,0.15)'" 
+             onmouseover="this.style.transform='translateY(-8px) scale(1.01)';this.style.boxShadow='0 16px 40px rgba(26,35,126,0.12)'" 
              onmouseout="this.style.transform='translateY(0) scale(1)';this.style.boxShadow='0 4px 20px rgba(26,35,126,0.08)'">
             
             <!-- Image Section -->
-            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 24px; display: flex; justify-content: center; align-items: center; min-height: 160px; position: relative;">
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 28px 24px; display: flex; justify-content: center; align-items: center; min-height: 180px; position: relative;">
             @if($mobil->foto)
                     <img src="{{ asset('storage/mobil/'.$mobil->foto) }}" alt="{{ $mobil->nama }}" 
-                         style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; transition: all 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" 
-                         onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" 
+                         style="width: 100%; height: 140px; object-fit: cover; border-radius: 12px; transition: all 0.4s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" 
+                         onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'" 
                          onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'">
                 @else
-                    <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                        <i class="fa fa-car" style="font-size: 3rem; color: #1976d2; opacity: 0.7;"></i>
+                    <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <i class="fa fa-car" style="font-size: 3.5rem; color: #1976d2; opacity: 0.7;"></i>
                     </div>
                 @endif
                 
                 <!-- Status Badge -->
-                <div style="position: absolute; top: 16px; right: 16px; background: {{ strtolower($mobil->status) === 'tersedia' ? 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)' : 'linear-gradient(135deg, #f44336 0%, #d32f2f 100%)' }}; color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                <div style="position: absolute; top: 20px; right: 20px; background: {{ strtolower($mobil->status) === 'tersedia' ? 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)' : 'linear-gradient(135deg, #f44336 0%, #d32f2f 100%)' }}; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                     <i class="fa {{ strtolower($mobil->status) === 'tersedia' ? 'fa-check-circle' : 'fa-times-circle' }}" style="margin-right: 4px;"></i>
                     {{ ucfirst($mobil->status) }}
                 </div>
             </div>
             
             <!-- Content Section -->
-            <div style="padding: 24px; flex: 1; display: flex; flex-direction: column;">
+            <div style="padding: 28px; flex: 1; display: flex; flex-direction: column;">
                 <!-- Car Name -->
-                <h2 style="font-size: 1.3rem; color: #1a237e; margin: 0 0 8px 0; font-weight: 700; line-height: 1.3; transition: all 0.3s ease;" 
+                <h2 style="font-size: 1.4rem; color: #1a237e; margin: 0 0 12px 0; font-weight: 700; line-height: 1.3; transition: all 0.3s ease;" 
                     onmouseover="this.style.color='#1976d2'" 
                     onmouseout="this.style.color='#1a237e'">
                     {{ $mobil->nama }}
                 </h2>
                 
                 <!-- Price -->
-                <div style="color: #1976d2; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; transition: all 0.3s ease;" 
-                     onmouseover="this.style.transform='scale(1.05)'" 
+                <div style="color: #1976d2; font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; transition: all 0.3s ease;" 
+                     onmouseover="this.style.transform='scale(1.02)'" 
                      onmouseout="this.style.transform='scale(1)'">
                     Rp {{ number_format($mobil->harga_sewa,0,',','.') }} <span style="font-size: 0.9rem; color: #666; font-weight: 500;">/ hari</span>
                 </div>
                 
                 <!-- Car Details -->
-                <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #555;">
-                        <i class="fa fa-tag" style="color: #1976d2; width: 16px;"></i>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; font-size: 1rem; color: #555; padding: 8px 0;">
+                        <i class="fa fa-tag" style="color: #1976d2; width: 18px; font-size: 1.1rem;"></i>
                         <span><strong>Merk:</strong> {{ $mobil->merk }}</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #555;">
-                        <i class="fa fa-cog" style="color: #1976d2; width: 16px;"></i>
+                    <div style="display: flex; align-items: center; gap: 10px; font-size: 1rem; color: #555; padding: 8px 0;">
+                        <i class="fa fa-cog" style="color: #1976d2; width: 18px; font-size: 1.1rem;"></i>
                         <span><strong>Tipe:</strong> {{ $mobil->tahun }}</span>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #555;">
-                        <i class="fa fa-info-circle" style="color: #1976d2; width: 16px;"></i>
+                    <div style="display: flex; align-items: center; gap: 10px; font-size: 1rem; color: #555; padding: 8px 0;">
+                        <i class="fa fa-info-circle" style="color: #1976d2; width: 18px; font-size: 1.1rem;"></i>
                         <span><strong>Status:</strong> <span style="color: {{ strtolower($mobil->status) === 'tersedia' ? '#4caf50' : '#f44336' }}; font-weight: 600;">{{ ucfirst($mobil->status) }}</span></span>
                     </div>
                 </div>
@@ -98,21 +98,21 @@
                 @if(strtolower($mobil->status) === 'tersedia')
                     @auth
                         <a href="{{ url('/peminjaman/create?mobil=' . $mobil->id) }}" 
-                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
-                           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(26,35,126,0.3)'" 
+                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 16px 24px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
+                           onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(26,35,126,0.25)'" 
                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(26,35,126,0.2)'">
                             <i class="fa fa-car" style="margin-right: 8px;"></i>Sewa Sekarang
                         </a>
                     @else
                         <a href="{{ url('/login') }}" 
-                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
-                           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 25px rgba(26,35,126,0.3)'" 
+                           style="background: linear-gradient(135deg, #1a237e 0%, #1976d2 100%); color: #fff; padding: 16px 24px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; text-decoration: none; text-align: center; transition: all 0.3s ease; transform: translateY(0); display: block; box-shadow: 0 4px 15px rgba(26,35,126,0.2);" 
+                           onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(26,35,126,0.25)'" 
                            onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(26,35,126,0.2)'">
                             <i class="fa fa-sign-in-alt" style="margin-right: 8px;"></i>Login untuk Sewa
                         </a>
                     @endauth
             @else
-                    <div style="background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%); color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-align: center; cursor: not-allowed; opacity: 0.8; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);" 
+                    <div style="background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%); color: #fff; padding: 16px 24px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; text-align: center; cursor: not-allowed; opacity: 0.8; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);" 
                          onmouseover="this.style.opacity='1';this.style.transform='translateY(-2px)'" 
                          onmouseout="this.style.opacity='0.8';this.style.transform='translateY(0)'">
                         <i class="fa fa-times-circle" style="margin-right: 8px;"></i>Tidak Tersedia
@@ -121,10 +121,10 @@
             </div>
         </div>
         @empty
-        <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 60px 20px; background: #fff; border-radius: 20px; box-shadow: 0 4px 20px rgba(26,35,126,0.08);" data-aos="fade-up">
-            <i class="fa fa-car" style="font-size: 4rem; color: #ddd; margin-bottom: 20px; display: block;"></i>
-            <h3 style="color: #666; margin-bottom: 8px;">Belum ada data mobil</h3>
-            <p style="color: #999; font-size: 1rem;">Mobil akan segera ditambahkan ke katalog</p>
+        <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 80px 40px; background: #fff; border-radius: 20px; box-shadow: 0 4px 20px rgba(26,35,126,0.08); margin: 20px 0;" data-aos="fade-up">
+            <i class="fa fa-car" style="font-size: 5rem; color: #ddd; margin-bottom: 30px; display: block;"></i>
+            <h3 style="color: #666; margin-bottom: 16px; font-size: 1.4rem;">Belum ada data mobil</h3>
+            <p style="color: #999; font-size: 1.1rem; line-height: 1.6;">Mobil akan segera ditambahkan ke katalog</p>
         </div>
         @endforelse
     </div>
@@ -259,6 +259,31 @@ document.addEventListener('DOMContentLoaded', function() {
         grid-template-columns: 1fr !important;
         gap: 20px !important;
     }
+    
+    /* Katalog grid adjustments */
+    div[style*="grid-template-columns"] {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        gap: 24px !important;
+    }
+    
+    /* Header adjustments for tablet */
+    h1[style*="margin: 40px 0 24px 0"] {
+        margin: 30px 0 20px 0 !important;
+        font-size: 2.2rem !important;
+    }
+    
+    div[style*="margin-bottom: 50px"] {
+        margin-bottom: 40px !important;
+    }
+    
+    /* Card adjustments for tablet */
+    div[style*="padding: 28px"] {
+        padding: 24px !important;
+    }
+    
+    div[style*="padding: 28px 24px"] {
+        padding: 24px 20px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -268,6 +293,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     .car-card .content {
         padding: 16px !important;
+    }
+    
+    /* Katalog grid adjustments for mobile */
+    div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Card adjustments for mobile */
+    div[style*="padding: 28px"] {
+        padding: 20px !important;
+    }
+    
+    div[style*="padding: 28px 24px"] {
+        padding: 20px 16px !important;
+    }
+    
+    /* Image section adjustments */
+    div[style*="min-height: 180px"] {
+        min-height: 160px !important;
+    }
+    
+    /* Text size adjustments */
+    h2[style*="font-size: 1.4rem"] {
+        font-size: 1.2rem !important;
+    }
+    
+    div[style*="font-size: 1.3rem"] {
+        font-size: 1.1rem !important;
+    }
+    
+    div[style*="font-size: 1rem"] {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Button adjustments */
+    a[style*="padding: 16px 24px"], div[style*="padding: 16px 24px"] {
+        padding: 14px 20px !important;
+        font-size: 1rem !important;
     }
 }
 

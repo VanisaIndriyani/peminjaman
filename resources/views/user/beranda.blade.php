@@ -23,7 +23,7 @@
         <div style="flex:1 1 260px;min-width:260px;max-width:350px;background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(26,35,126,0.08);padding:32px 24px;display:flex;flex-direction:column;align-items:center;transition:all 0.3s ease;transform:translateY(0);" data-aos="fade-up" data-aos-delay="100" onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 12px 40px rgba(26,35,126,0.15)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 12px rgba(26,35,126,0.08)'">
             <i class="fa fa-phone" style="font-size:2.2rem;color:#1976d2;margin-bottom:10px;transition:all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"></i>
             <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:6px;">Telepon Kami</h3>
-            <div style="font-size:1.1rem;color:#222;margin-bottom:2px;">+62 896-3693-7394 <i class="fa fa-whatsapp" style="color:#43d854;"></i></div>
+            <div style="font-size:1.1rem;color:#222;margin-bottom:2px;">62 896-3693-7394 <i class="fa fa-whatsapp" style="color:#43d854;"></i></div>
             <div style="color:#4b5563;font-size:0.98rem;">Dukungan 24/7 Tersedia</div>
         </div>
         <div style="flex:1 1 260px;min-width:260px;max-width:350px;background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(26,35,126,0.08);padding:32px 24px;display:flex;flex-direction:column;align-items:center;transition:all 0.3s ease;transform:translateY(0);" data-aos="fade-up" data-aos-delay="200" onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 12px 40px rgba(26,35,126,0.15)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 12px rgba(26,35,126,0.08)'">
