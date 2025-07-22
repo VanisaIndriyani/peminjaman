@@ -3,7 +3,7 @@
 @section('content')
 <div style="max-width:1200px;margin:0 auto;padding:32px 0 48px 0;">
     <h1 style="font-size:2.7rem;color:#1a237e;font-weight:800;text-align:center;margin-bottom:8px;" data-aos="fade-down" data-aos-duration="800">Tentang MD Rent Car</h1>
-    <div style="color:#4b5563;text-align:center;font-size:1.18rem;margin-bottom:38px;" data-aos="fade-up" data-aos-delay="200">Mitra terpercaya Anda dalam layanan sewa mobil premium sejak 2010</div>
+    <div style="color:#4b5563;text-align:center;font-size:1.18rem;margin-bottom:38px;" data-aos="fade-up" data-aos-delay="200">Mitra terpercaya Anda dalam layanan sewa mobil premium sejak 2017</div>
     
     <!-- Misi & Visi -->
     <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;margin-bottom:36px;">

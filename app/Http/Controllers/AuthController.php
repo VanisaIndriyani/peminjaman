@@ -20,16 +20,33 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if (!$user) {
+            // Email tidak ditemukan
+            return back()->withErrors([
+                'email' => 'Email tidak terdaftar.',
+            ])->onlyInput('email');
+        }
+
+        if (!\Hash::check($request->password, $user->password)) {
+            // Password salah
+            return back()->withErrors([
+                'password' => 'Sandi salah.',
+            ])->onlyInput('email');
+        }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $user = Auth::user();
             if ($user->role === 'admin') {
                 return redirect('/admin/dashboard');
             } else {
-                return redirect('/beranda'); // redirect ke beranda
+                return redirect('/beranda');
             }
         }
 
+        // Fallback (tidak akan sampai sini)
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->onlyInput('email');

@@ -122,12 +122,19 @@
                             </td>
                             <td class="col-aksi">
                                 <div class="action-buttons">
-                                    <button class="btn-view" title="Lihat Detail" onclick="showMessageDetail('{{ $pesan->id }}', '{{ $pesan->nama_depan }} {{ $pesan->nama_belakang }}', '{{ $pesan->email }}', '{{ $pesan->telepon ?? '-' }}', '{{ $pesan->subjek }}', '{{ $pesan->pesan }}', '{{ $pesan->created_at->format('d M Y H:i') }}')">
+                                    <button class="btn-edit" title="Lihat Detail" onclick="showMessageDetail('{{ $pesan->id }}', '{{ $pesan->nama_depan }} {{ $pesan->nama_belakang }}', '{{ $pesan->email }}', '{{ $pesan->telepon ?? '-' }}', '{{ $pesan->subjek }}', '{{ $pesan->pesan }}', '{{ $pesan->created_at->format('d M Y H:i') }}')">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <button class="btn-reply" title="Balas Pesan" onclick="replyMessage('{{ $pesan->email }}', '{{ $pesan->subjek }}')">
+                                    <button class="btn-edit" title="Balas Pesan" onclick="replyMessage('{{ $pesan->email }}', '{{ $pesan->subjek }}')">
                                         <i class="fa fa-reply"></i>
                                     </button>
+                                    <form action="{{ route('pesan.destroy', $pesan->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus pesan ini?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
             </td>
         </tr>
@@ -295,7 +302,10 @@
     align-items: center;
     gap: 20px;
 }
-
+.btn-delete {
+    background: #fee2e2;
+    color: #dc2626;
+}
 .search-box {
     position: relative;
     flex: 1;

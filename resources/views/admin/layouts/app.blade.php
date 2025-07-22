@@ -313,7 +313,7 @@
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
-            }
+        }
         }
         
         .profile-dropdown.open .dropdown-content {
@@ -433,7 +433,7 @@
             .main-content {
                 margin-left: 260px;
                 padding: 0 24px;
-            }
+        }
         }
         
         @media (max-width: 900px) {
@@ -669,7 +669,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-        }
+            }
         
         /* Responsive text */
         .responsive-text {
@@ -767,7 +767,7 @@
             <main>
                 <div class="content-wrapper" style="padding: 0 0 32px 0;">
                     <div class="content-container">
-                        @yield('content')
+                @yield('content')
                     </div>
                 </div>
             </main>
@@ -815,8 +815,8 @@
         });
         
         // Profile dropdown toggle
-        function toggleDropdown(e) {
-            e.preventDefault();
+function toggleDropdown(e) {
+    e.preventDefault();
             const dropdown = document.getElementById('profileDropdown');
             const isOpen = dropdown.classList.contains('open');
             
@@ -832,13 +832,13 @@
             }
             
             // Close dropdown when clicking outside
-            document.addEventListener('click', function handler(event) {
-                if (!dropdown.contains(event.target)) {
-                    dropdown.classList.remove('open');
-                    document.removeEventListener('click', handler);
-                }
-            });
+    document.addEventListener('click', function handler(event) {
+        if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove('open');
+            document.removeEventListener('click', handler);
         }
+    });
+}
         
         // Add fade out animation
         const style = document.createElement('style');
@@ -927,6 +927,6 @@
                 }
             });
         });
-    </script>
+</script>
 </body>
-</html>
+</html> 

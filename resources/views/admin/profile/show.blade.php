@@ -16,30 +16,30 @@
     </div>
 
     <!-- Success Message -->
-    @if(session('success'))
+@if(session('success'))
         <div class="success-message">
             <i class="fa fa-check-circle"></i>
             <span>{{ session('success') }}</span>
         </div>
-    @endif
+@endif
 
     <!-- Profile Form Section -->
     <div class="profile-form-section">
         <div class="form-container">
             <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data" class="profile-form">
-                @csrf
-                @method('PUT')
+    @csrf
+    @method('PUT')
                 
                 <!-- Profile Picture Section -->
                 <div class="profile-picture-section">
                     <div class="picture-container">
-                        @if($admin && $admin->foto)
+        @if($admin && $admin->foto)
                             <img src="{{ asset('storage/profile/'.$admin->foto) }}" alt="Foto Profil" class="profile-picture" id="profilePreview">
-                        @else
+        @else
                             <div class="profile-picture-placeholder" id="profilePreview">
                                 <i class="fa fa-user"></i>
                             </div>
-                        @endif
+        @endif
                         <div class="picture-overlay">
                             <label for="fotoInput" class="upload-btn">
                                 <i class="fa fa-camera"></i>
@@ -133,10 +133,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
-</div>
+    </div>
+    </div>
+    </div>
 
 <script>
 // Image preview functionality

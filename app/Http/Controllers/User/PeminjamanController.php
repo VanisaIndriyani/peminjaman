@@ -84,14 +84,14 @@ class PeminjamanController extends Controller
         $pesan .= "Total: Rp " . number_format($total, 0, ',', '.') . "\n";
         $pesan .= "Nama: {$user->name}\n";
 
-        if ($diskon > 0) {
+if ($diskon > 0) {
             $pesan .= "Diskon: {$diskon}% pemesanan pertama\n";
-        }
+}
 
         $pesan .= "\nMohon konfirmasi pembayaran. Terima kasih.";
 
         $wa = "https://wa.me/6289636937394?text=" . urlencode($pesan);
-        return redirect()->away($wa);
+return redirect()->away($wa);
 
     }
 }

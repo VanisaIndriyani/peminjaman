@@ -29,10 +29,13 @@
                     <input type="text" id="merk" name="merk" class="form-input" required>
                 </div>
 
-                <!-- Tahun -->
+                <!-- Tipe -->
                 <div class="form-group">
-                    <label for="tahun" class="form-label">Tahun</label>
-                    <input type="number" id="tahun" name="tahun" class="form-input" required min="1990" max="2099">
+                    <label for="tahun" class="form-label">Tipe</label>
+                    <select id="tahun" name="tahun" class="form-select" required>
+                        <option value="Matic">Matic</option>
+                        <option value="Manual">Manual</option>
+                    </select>
                 </div>
 
                 <!-- Plat Nomor -->

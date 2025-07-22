@@ -668,12 +668,12 @@
                     <i class="fa fa-car" style="font-size:2rem;color:#3b82f6;"></i>
                     <span style="font-size:1.35rem;font-weight:700;letter-spacing:0.5px;">MD Rent Car</span>
                 </div>
-                <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;">Mitra terpercaya Anda untuk sewa mobil. Kendaraan berkualitas dengan harga kompetitif.</div>
+                <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;text-align:left;">Mitra terpercaya Anda untuk sewa mobil. Kendaraan berkualitas dengan harga kompetitif.</div>
             </div>
             <!-- Tautan Cepat -->
             <div style="flex:1 1 160px;min-width:160px;max-width:200px;" data-aos="fade-up" data-aos-delay="200">
                 <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;">Tautan Cepat</div>
-                <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;flex-direction:column;gap:8px;text-align:left;">
                     <a href="{{ url('/beranda') }}" style="color:#fff;text-decoration:none;">Beranda</a>
                     <a href="{{ url('/tentang') }}" style="color:#fff;text-decoration:none;">Tentang</a>
                     <a href="{{ url('/katalog') }}" style="color:#fff;text-decoration:none;">Katalog</a>
@@ -685,10 +685,10 @@
                 <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
                     <i class="fa fa-car" style="font-size:1.5rem;color:#3b82f6;"></i> Informasi Kontak
                 </div>
-                <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;">
+                <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;text-align:left;">
                     Jl. Keranji GG. H. MOH NO.60 RT 04/RW 06 Ciganjur<br>
                     Jagakarsa, Jakarta Selatan. 12630<br>
-                    Telepon: <a href="https://wa.me/6289636937394" style="color:#43d854;text-decoration:none;">+62 896-3693-7394 <i class='fab fa-whatsapp'></i></a><br>
+                    Telepon: <a href="https://wa.me/6289636937394" style="color:#43d854;text-decoration:none;">+62 896-3693-7394</a><br>
                     Email: <a href="mailto:mdrentcar22@gmail.com" style="color:#fff;text-decoration:none;">mdrentcar22@gmail.com</a>
                 </div>
             </div>
@@ -696,8 +696,8 @@
             <div style="flex:1 1 120px;min-width:120px;max-width:160px;" data-aos="fade-up" data-aos-delay="400">
                 <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;">Ikuti Kami</div>
                 <div style="display:flex;gap:18px;align-items:center;">
-                    <a href="#" style="color:#fff;font-size:1.5rem;transition: all 0.3s ease;"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" style="color:#fff;font-size:1.5rem;transition: all 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@mdrentcarjkt_" target="_blank" rel="noopener" style="color:#fff;font-size:1.5rem;transition: all 0.3s ease;"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/mdrentcarjakarta/" target="_blank" rel="noopener" style="color:#fff;font-size:1.5rem;transition: all 0.3s ease;"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

@@ -111,6 +111,7 @@
                             <th class="col-date">Tanggal Pinjam</th>
                             <th class="col-date">Tanggal Kembali</th>
                             <th class="col-status">Status</th>
+                            <th class="col-aksi">Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -173,6 +174,17 @@
                                     {{ ucfirst($peminjaman->status) }}
                                 </span>
                             </td>
+                            <td class="col-aksi">
+                                <div class="action-buttons">
+                                    <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus peminjaman ini?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
         </tr>
         @endforeach
     </tbody>
@@ -201,6 +213,7 @@
                             <th class="col-date">Tanggal Pengembalian</th>
                             <th class="col-denda">Denda</th>
                             <th class="col-status">Status</th>
+                            <th class="col-aksi">Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -256,6 +269,17 @@
                                     {{ ucfirst($pengembalian->status) }}
                                 </span>
                             </td>
+                            <td class="col-aksi">
+                                <div class="action-buttons">
+                                    <form action="{{ route('pengembalian.destroy', $pengembalian->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus pengembalian ini?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
         </tr>
         @endforeach
     </tbody>
@@ -283,7 +307,10 @@
 .header-content {
     flex: 1;
 }
-
+.btn-delete {
+    background: #fee2e2;
+    color: #dc2626;
+}
 .page-title {
     font-size: 2rem;
     font-weight: 700;
@@ -602,6 +629,11 @@
 
 .col-status {
     width: 160px;
+    text-align: center;
+}
+
+.col-aksi {
+    width: 80px;
     text-align: center;
 }
 

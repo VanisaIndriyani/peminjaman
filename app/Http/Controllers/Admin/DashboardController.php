@@ -34,8 +34,21 @@ class DashboardController extends Controller
         // Statistik peminjaman per minggu (12 minggu terakhir)
         $weeklyData = $this->getWeeklyData();
 
+        // Aktivitas terbaru
+        $recentPeminjaman = \App\Models\Peminjaman::with('user', 'mobil')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+        $recentPengembalian = \App\Models\Pengembalian::with('peminjaman.user', 'peminjaman.mobil')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+        $recentPengguna = User::where('role', 'user')->orderBy('created_at', 'desc')->limit(5)->get();
+        $recentPesan = class_exists(Pesan::class) ? Pesan::orderBy('created_at', 'desc')->limit(5)->get() : collect();
+
         return view('admin.dashboard', compact(
-            'jumlahMobil', 'jumlahPengguna', 'jumlahPeminjaman', 'jumlahPesan', 'dataStatistik', 'weeklyData'
+            'jumlahMobil', 'jumlahPengguna', 'jumlahPeminjaman', 'jumlahPesan', 'dataStatistik', 'weeklyData',
+            'recentPeminjaman', 'recentPengembalian', 'recentPengguna', 'recentPesan'
         ));
     }
 

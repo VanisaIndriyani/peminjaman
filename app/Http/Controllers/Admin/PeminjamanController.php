@@ -68,4 +68,14 @@ class PeminjamanController extends Controller
         ]);
         return redirect()->route('peminjaman.index')->with('success', 'Status peminjaman berhasil diubah menjadi selesai.');
     }
+
+    public function destroy($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        
+        // Hapus data peminjaman
+        $peminjaman->delete();
+        
+        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil dihapus.');
+    }
 } 

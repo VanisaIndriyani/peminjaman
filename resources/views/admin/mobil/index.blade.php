@@ -31,7 +31,7 @@
                         <th class="col-no">No</th>
                         <th class="col-nama">Nama Mobil</th>
                         <th class="col-merk">Merk</th>
-                        <th class="col-tahun">Tahun</th>
+                        <th class="col-tahun">Tipe</th>
                         <th class="col-plat">Plat Nomor</th>
                         <th class="col-harga">Harga Sewa</th>
                         <th class="col-status">Status</th>
@@ -195,48 +195,63 @@
 /* Table Styles */
 .table-container {
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    border: 1px solid #e5e7eb;
 }
 
 .table-wrapper {
     overflow-x: auto;
+    border-radius: 16px;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
+    min-width: 850px;
+    table-layout: fixed;
 }
 
 .data-table thead {
-    background: #f8fafc;
-    border-bottom: 2px solid #e5e7eb;
+    background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+    border-bottom: 2px solid #d1d5db;
 }
 
 .data-table th {
-    padding: 16px 12px;
+    padding: 12px 8px;
     text-align: left;
-    font-weight: 600;
-    color: #374151;
-    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1a237e;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    border-right: 1px solid #e5e7eb;
+}
+
+.data-table th:last-child {
+    border-right: none;
 }
 
 .data-table tbody tr {
     border-bottom: 1px solid #f3f4f6;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .data-table tbody tr:hover {
-    background-color: #f9fafb;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .data-table td {
-    padding: 16px 12px;
+    padding: 12px 8px;
     vertical-align: middle;
+    border-right: 1px solid #f3f4f6;
+}
+
+.data-table td:last-child {
+    border-right: none;
 }
 
 /* Column Styles */
@@ -248,11 +263,13 @@
 }
 
 .col-nama {
-    min-width: 200px;
+    min-width: 160px;
+    max-width: 180px;
 }
 
 .col-merk {
-    min-width: 120px;
+    min-width: 90px;
+    text-align: center;
 }
 
 .col-tahun {
@@ -262,10 +279,12 @@
 
 .col-plat {
     min-width: 120px;
+    text-align: center;
 }
 
 .col-harga {
     min-width: 140px;
+    text-align: right;
 }
 
 .col-status {
@@ -274,12 +293,12 @@
 }
 
 .col-foto {
-    width: 100px;
+    width: 70px;
     text-align: center;
 }
 
 .col-aksi {
-    width: 120px;
+    width: 90px;
     text-align: center;
 }
 
@@ -287,11 +306,14 @@
 .mobil-info {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 
 .mobil-name {
     font-weight: 600;
     color: #1a237e;
+    font-size: 0.95rem;
+    line-height: 1.3;
 }
 
 .plat-number {
@@ -301,23 +323,28 @@
     background: #f3f4f6;
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    display: inline-block;
+    text-align: center;
 }
 
 .price {
     font-weight: 600;
     color: #059669;
+    font-size: 0.9rem;
 }
 
 /* Status Badge */
 .status-badge {
     display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    padding: 6px 10px;
+    border-radius: 16px;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    min-width: 80px;
+    text-align: center;
 }
 
 .status-available {
@@ -341,43 +368,47 @@
 }
 
 .mobil-image {
-    width: 60px;
-    height: 45px;
+    width: 50px;
+    height: 40px;
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .no-image {
-    width: 60px;
-    height: 45px;
+    width: 50px;
+    height: 40px;
     background: #f3f4f6;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #9ca3af;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
 }
 
 /* Action Buttons */
 .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
+    align-items: center;
 }
 
 .btn-edit, .btn-delete {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .btn-edit {
@@ -423,6 +454,18 @@
     .data-table {
         min-width: 800px;
     }
+    
+    .col-nama {
+        min-width: 150px;
+    }
+    
+    .col-merk {
+        min-width: 80px;
+    }
+    
+    .col-plat {
+        min-width: 110px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -440,9 +483,20 @@
     }
     
     .btn-edit, .btn-delete {
-        width: 32px;
-        height: 32px;
-        font-size: 0.75rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+    
+    .mobil-image, .no-image {
+        width: 40px;
+        height: 30px;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+        min-width: 70px;
     }
 }
 </style>

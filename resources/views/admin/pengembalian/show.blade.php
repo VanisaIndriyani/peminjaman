@@ -57,8 +57,8 @@
                     <span class="value plat-number">{{ $pengembalian->peminjaman->mobil->plat_nomor ?? '-' }}</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Tahun:</span>
-                    <span class="value">{{ $pengembalian->peminjaman->mobil->tahun ?? '-' }}</span>
+                                            <span class="label">Tipe:</span>
+                        <span class="value">{{ $pengembalian->peminjaman->mobil->tahun ?? '-' }}</span>
                 </div>
     </div>
     </div>

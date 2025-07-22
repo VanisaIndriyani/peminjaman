@@ -78,7 +78,7 @@
             </td>
                         <td class="col-aksi">
                             <div class="action-buttons">
-                                <a href="{{ route('pengembalian.show', $pengembalian->id) }}" class="btn-view" title="Lihat Detail">
+                                <a href="{{ route('pengembalian.show', $pengembalian->id) }}" class="btn-edit" title="Lihat Detail">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 @if(strtolower($pengembalian->status) !== 'selesai')
@@ -89,6 +89,13 @@
                                     </button>
                     </form>
                                 @endif
+                                <form action="{{ route('pengembalian.destroy', $pengembalian->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus pengembalian ini?')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                 </div>
             </td>
         </tr>
@@ -124,6 +131,49 @@
     color: #1a237e;
     margin: 0 0 8px 0;
 }
+/* Specific styling for edit and delete buttons to match mobil index */
+.btn-edit, .btn-delete {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+}
+
+.btn-edit {
+    background: #dbeafe !important;
+    color: #1976d2 !important;
+}
+
+.btn-edit:hover {
+    background: #1976d2 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-delete {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+.btn-delete:hover {
+    background: #dc2626 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.delete-form {
+    display: inline;
+}
 
 .page-subtitle {
     font-size: 1rem;
@@ -145,6 +195,7 @@
     border-radius: 8px;
     border: 1px solid #e5e7eb;
 }
+
 
 .stat-item i {
     color: #1976d2;

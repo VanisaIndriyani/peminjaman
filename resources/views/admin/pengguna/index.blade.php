@@ -84,10 +84,16 @@
                         </td>
                         <td class="col-aksi">
                             <div class="action-buttons">
-                                <button class="btn-view" title="Lihat Detail" onclick="showUserDetail('{{ $user->id }}', '{{ $user->name }}', '{{ $user->email }}', '{{ $user->created_at->format('d M Y H:i') }}', '{{ $user->role ?? 'user' }}')">
+                                <button class="btn-edit" title="Lihat Detail" onclick="showUserDetail('{{ $user->id }}', '{{ $user->name }}', '{{ $user->email }}', '{{ $user->created_at->format('d M Y H:i') }}', '{{ $user->role ?? 'user' }}')">
                                     <i class="fa fa-eye"></i>
                                 </button>
-                              
+                                <form action="{{ route('pengguna.destroy', $user->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
         </tr>
@@ -146,7 +152,10 @@
 .header-content {
     flex: 1;
 }
-
+.btn-delete {
+    background: #fee2e2;
+    color: #dc2626;
+}
 .page-title {
     font-size: 2rem;
     font-weight: 700;
@@ -444,6 +453,50 @@
     color: #fff;
     transform: scale(1.05);
     box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2);
+}
+
+/* Specific styling for edit and delete buttons to match mobil index */
+.btn-edit, .btn-delete {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+}
+
+.btn-edit {
+    background: #dbeafe !important;
+    color: #1976d2 !important;
+}
+
+.btn-edit:hover {
+    background: #1976d2 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-delete {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+.btn-delete:hover {
+    background: #dc2626 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.delete-form {
+    display: inline;
 }
 
 /* Modal Styles */

@@ -96,7 +96,7 @@
                         </td>
                         <td class="col-aksi">
                             <div class="action-buttons">
-                                <a href="{{ route('peminjaman.show', $peminjaman->id) }}" class="btn-view" title="Lihat Detail">
+                                <a href="{{ route('peminjaman.show', $peminjaman->id) }}" class="btn-edit" title="Lihat Detail">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 @if(strtolower($peminjaman->status) === 'disetujui')
@@ -107,9 +107,13 @@
                                     </button>
                                 </form>
                                 @endif
-                                @if(strtolower($peminjaman->status) === 'disetujui')
-                               
-                                @endif
+                                <form action="{{ route('peminjaman.destroy', $peminjaman->id) }}" method="POST" class="delete-form" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus peminjaman ini?')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -450,6 +454,46 @@
     box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2);
 }
 
+/* Specific styling for edit and delete buttons to match mobil index */
+.btn-edit, .btn-delete {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+}
+
+.btn-edit {
+    background: #dbeafe !important;
+    color: #1976d2 !important;
+}
+
+.btn-edit:hover {
+    background: #1976d2 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-delete {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+.btn-delete:hover {
+    background: #dc2626 !important;
+    color: #fff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 .action-form {
     display: inline;
 }
@@ -480,6 +524,12 @@
         width: 28px;
         height: 28px;
         font-size: 0.75rem;
+    }
+    
+    .btn-edit, .btn-delete {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.75rem !important;
     }
 }
 
@@ -512,6 +562,16 @@
         height: 26px;
         font-size: 0.7rem;
     }
+    
+    .btn-edit, .btn-delete {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.7rem !important;
+    }
+    
+.delete-form {
+    display: inline;
+}
 }
 </style>
 @endsection 

@@ -4,25 +4,7 @@
 <!-- Bootstrap 5 CDN jika belum ada -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Carousel Slide Gambar -->
-<div id="catalogCarousel" class="carousel slide mb-4" data-bs-ride="carousel" style="max-width: 900px; margin: 0 auto;" data-aos="fade-in" data-aos-duration="1000">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ asset('img/catalog.jpeg') }}" class="d-block w-100" alt="Catalog" style="border-radius: 16px; height: 340px; object-fit: cover;">
-    </div>
-    <div class="carousel-item">
-      <img src="{{ asset('img/mobile.jpeg') }}" class="d-block w-100" alt="Mobile" style="border-radius: 16px; height: 340px; object-fit: cover;">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#catalogCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#catalogCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     <h1 style="font-size: 2.5rem; color: #1a237e; font-weight: 800; margin-bottom: 16px; text-align: center;" data-aos="fade-down" data-aos-delay="200">
@@ -103,8 +85,8 @@
                         <span><strong>Merk:</strong> {{ $mobil->merk }}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #555;">
-                        <i class="fa fa-calendar" style="color: #1976d2; width: 16px;"></i>
-                        <span><strong>Tahun:</strong> {{ $mobil->tahun }}</span>
+                        <i class="fa fa-cog" style="color: #1976d2; width: 16px;"></i>
+                        <span><strong>Tipe:</strong> {{ $mobil->tahun }}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #555;">
                         <i class="fa fa-info-circle" style="color: #1976d2; width: 16px;"></i>
@@ -147,6 +129,43 @@
         @endforelse
     </div>
 </div>
+
+<!-- Modal Gambar Besar -->
+<div id="imageModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+    <span id="closeModal" style="position:absolute;top:32px;right:48px;font-size:2.5rem;color:#fff;cursor:pointer;font-weight:bold;z-index:10001;">&times;</span>
+    <img id="modalImg" src="" alt="Gambar Mobil" style="max-width:90vw;max-height:80vh;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);background:#fff;">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Cari semua gambar mobil di katalog dan carousel
+    const images = document.querySelectorAll('.card-mobil img, .mobil-img, .img-mobil, .carousel-img');
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModal = document.getElementById('closeModal');
+
+    images.forEach(img => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function() {
+            modal.style.display = 'flex';
+            modalImg.src = this.src;
+            modalImg.alt = this.alt || 'Gambar Mobil';
+        });
+    });
+
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+        modalImg.src = '';
+    });
+    // Tutup modal jika klik di luar gambar
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            modalImg.src = '';
+        }
+    });
+});
+</script>
 
 <!-- Bootstrap JS jika belum ada -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

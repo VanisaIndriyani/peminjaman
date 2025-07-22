@@ -20,7 +20,7 @@
                    onmouseout="this.style.transform='scale(1)'"></i>
                 <div>
                     <div style="font-weight:700;">Telepon</div>
-                    <div style="color:#1976d2;font-size:1.08rem;">+62 896-3693-7394 <i class="fa fa-whatsapp" style="color:#43d854;"></i></div>
+                    <div style="color:#1976d2;font-size:1.08rem;">+62 896-3693-7394</div>
                     <div style="font-size:0.97rem;color:#4b5563;">Tersedia 24/7 untuk dukungan</div>
                 </div>
             </div>
@@ -153,17 +153,16 @@
              data-aos="fade-up" data-aos-delay="300"
              onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 40px rgba(26,35,126,0.15)'" 
              onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 12px rgba(26,35,126,0.08)'">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6041.1826364550825!2d106.780116!3d-6.329948!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ef886afbdb09%3A0xd003a0ed5937a958!2sMD%20Rent%20Car%20Ciganjur!5e1!3m2!1sen!2sid!4v1752652016977!5m2!1sen!2sid" 
-                    width="100%" height="340" 
-                    style="border:0;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.08);transition:all 0.3s ease;" 
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                    onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.15)'" 
-                    onmouseout="this.style.boxShadow='0 2px 16px rgba(0,0,0,0.08)'"></iframe>
-            <div style="margin-top: 0.75rem; font-weight: 500; color: #2563eb; text-align:center;transition:all 0.3s ease;" 
-                 onmouseover="this.style.color='#1a237e';this.style.transform='scale(1.05)'" 
-                 onmouseout="this.style.color='#2563eb';this.style.transform='scale(1)'">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6041.099031066706!2d106.801359!3d-6.337092!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ef886afbdb09:0xd003a0ed5937a958!2sMD%20Rent%20Car%20Ciganjur!5e1!3m2!1sen!2sid!4v1753001388138!5m2!1sen!2sid"
+    width="100%" height="340"
+    style="border:0; border-radius:12px; box-shadow:0 2px 16px rgba(0,0,0,0.08); transition:all 0.3s ease;"
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <a href="https://www.google.com/maps/place/MD+Rent+Car+Ciganjur/@-6.337092,106.801359,1387m/data=!3m1!1e3!4m6!3m5!1s0x2e69ef886afbdb09:0xd003a0ed5937a958!8m2!3d-6.337092!4d106.8013591!16s%2Fg%2F11v18xxn9h?hl=en&entry=ttu&g_ep=EgoyMDI1MDcxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener"
+               style="margin-top: 0.75rem; font-weight: 500; color: #2563eb; text-align:center;transition:all 0.3s ease; display:block; text-decoration:underline; cursor:pointer;"
+               onmouseover="this.style.color='#1a237e';this.style.transform='scale(1.05)'"
+               onmouseout="this.style.color='#2563eb';this.style.transform='scale(1)'">
                 <i class="fa fa-map-marker-alt" style="margin-right:8px;"></i>Lokasinya di sini
-            </div>
+            </a>
         </div>
     </div>
 </div>

@@ -24,7 +24,7 @@ class MobilController extends Controller
         $validated = $request->validate([
             'nama' => 'required',
             'merk' => 'required',
-            'tahun' => 'required|digits:4|integer',
+            'tahun' => 'required|in:Matic,Manual',
             'plat_nomor' => 'required|unique:mobils',
             'harga_sewa' => 'required|integer',
             'status' => 'required|in:tersedia,dipinjam',
@@ -52,7 +52,7 @@ class MobilController extends Controller
         $validated = $request->validate([
             'nama' => 'required',
             'merk' => 'required',
-            'tahun' => 'required|digits:4|integer',
+            'tahun' => 'required|in:Matic,Manual',
             'plat_nomor' => 'required|unique:mobils,plat_nomor,' . $mobil->id,
             'harga_sewa' => 'required|integer',
             'status' => 'required|in:tersedia,dipinjam',

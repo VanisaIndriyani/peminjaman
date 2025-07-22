@@ -101,46 +101,46 @@
         
         </div>
         <div class="activity-grid">
-            <div class="activity-card">
-                <div class="activity-icon">
-                    <i class="fa fa-car"></i>
+            @foreach($recentPeminjaman as $peminjaman)
+                <div class="activity-card">
+                    <div class="activity-icon"><i class="fa fa-car"></i></div>
+                    <div class="activity-content">
+                        <h4>Peminjaman Baru</h4>
+                        <p>Mobil {{ $peminjaman->mobil->nama ?? '-' }} dipinjam oleh {{ $peminjaman->user->name ?? '-' }}</p>
+                        <span class="activity-time">{{ $peminjaman->created_at->diffForHumans() }}</span>
+                    </div>
                 </div>
-                <div class="activity-content">
-                    <h4>Peminjaman Baru</h4>
-                    <p>Mobil Toyota Fortuner dipinjam oleh John Doe</p>
-                    <span class="activity-time">2 jam yang lalu</span>
+            @endforeach
+            @foreach($recentPengembalian as $pengembalian)
+                <div class="activity-card">
+                    <div class="activity-icon"><i class="fa fa-undo"></i></div>
+                    <div class="activity-content">
+                        <h4>Pengembalian</h4>
+                        <p>Mobil {{ $pengembalian->peminjaman->mobil->nama ?? '-' }} dikembalikan oleh {{ $pengembalian->peminjaman->user->name ?? '-' }}</p>
+                        <span class="activity-time">{{ $pengembalian->created_at->diffForHumans() }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="activity-card">
-                <div class="activity-icon">
-                    <i class="fa fa-undo"></i>
+            @endforeach
+            @foreach($recentPengguna as $user)
+                <div class="activity-card">
+                    <div class="activity-icon"><i class="fa fa-user-plus"></i></div>
+                    <div class="activity-content">
+                        <h4>Pengguna Baru</h4>
+                        <p>{{ $user->name }} mendaftar sebagai pengguna baru</p>
+                        <span class="activity-time">{{ $user->created_at->diffForHumans() }}</span>
+                    </div>
                 </div>
-                <div class="activity-content">
-                    <h4>Pengembalian</h4>
-                    <p>Mobil Honda Brio dikembalikan oleh Jane Smith</p>
-                    <span class="activity-time">4 jam yang lalu</span>
+            @endforeach
+            @foreach($recentPesan as $pesan)
+                <div class="activity-card">
+                    <div class="activity-icon"><i class="fa fa-envelope"></i></div>
+                    <div class="activity-content">
+                        <h4>Pesan Baru</h4>
+                        <p>Pesan dari {{ $pesan->nama }} tentang {{ $pesan->subjek }}</p>
+                        <span class="activity-time">{{ $pesan->created_at->diffForHumans() }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="activity-card">
-                <div class="activity-icon">
-                    <i class="fa fa-user-plus"></i>
-                </div>
-                <div class="activity-content">
-                    <h4>Pengguna Baru</h4>
-                    <p>Sarah Johnson mendaftar sebagai pengguna baru</p>
-                    <span class="activity-time">6 jam yang lalu</span>
-                </div>
-            </div>
-            <div class="activity-card">
-                <div class="activity-icon">
-                    <i class="fa fa-envelope"></i>
-                </div>
-                <div class="activity-content">
-                    <h4>Pesan Baru</h4>
-                    <p>Pesan dari Mike Wilson tentang ketersediaan mobil</p>
-                    <span class="activity-time">8 jam yang lalu</span>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 

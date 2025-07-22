@@ -30,10 +30,13 @@
                     <input type="text" id="merk" name="merk" value="{{ $mobil->merk }}" class="form-input" required>
     </div>
 
-                <!-- Tahun -->
+                <!-- Tipe -->
                 <div class="form-group">
-                    <label for="tahun" class="form-label">Tahun</label>
-                    <input type="number" id="tahun" name="tahun" value="{{ $mobil->tahun }}" class="form-input" required min="1990" max="2099">
+                    <label for="tahun" class="form-label">Tipe</label>
+                    <select id="tahun" name="tahun" class="form-select" required>
+                        <option value="Matic" @if($mobil->tahun=='Matic') selected @endif>Matic</option>
+                        <option value="Manual" @if($mobil->tahun=='Manual') selected @endif>Manual</option>
+                    </select>
     </div>
 
                 <!-- Plat Nomor -->

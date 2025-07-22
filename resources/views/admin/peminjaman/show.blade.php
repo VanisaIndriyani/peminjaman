@@ -56,7 +56,7 @@
                         <span class="value plat-number">{{ $peminjaman->mobil->plat_nomor ?? '-' }}</span>
                     </div>
                     <div class="detail-item">
-                        <span class="label">Tahun:</span>
+                        <span class="label">Tipe:</span>
                         <span class="value">{{ $peminjaman->mobil->tahun ?? '-' }}</span>
                     </div>
                 </div>
