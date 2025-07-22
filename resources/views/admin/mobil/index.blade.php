@@ -241,7 +241,7 @@
 .data-table tbody tr:hover {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .data-table td {
@@ -312,8 +312,8 @@
 .mobil-name {
     font-weight: 600;
     color: #1a237e;
-    font-size: 0.95rem;
-    line-height: 1.3;
+    font-size: 0.9rem;
+    line-height: 1.2;
 }
 
 .plat-number {
@@ -321,9 +321,9 @@
     font-weight: 600;
     color: #374151;
     background: #f3f4f6;
-    padding: 4px 8px;
+    padding: 3px 6px;
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     display: inline-block;
     text-align: center;
 }
@@ -331,19 +331,19 @@
 .price {
     font-weight: 600;
     color: #059669;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 /* Status Badge */
 .status-badge {
     display: inline-block;
-    padding: 6px 10px;
-    border-radius: 16px;
-    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    min-width: 80px;
+    min-width: 70px;
     text-align: center;
 }
 
@@ -368,8 +368,8 @@
 }
 
 .mobil-image {
-    width: 50px;
-    height: 40px;
+    width: 45px;
+    height: 35px;
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid #e5e7eb;
@@ -377,22 +377,22 @@
 }
 
 .no-image {
-    width: 50px;
-    height: 40px;
+    width: 45px;
+    height: 35px;
     background: #f3f4f6;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #9ca3af;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border: 1px solid #e5e7eb;
 }
 
 /* Action Buttons */
 .action-buttons {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     justify-content: center;
     align-items: center;
 }
@@ -401,12 +401,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     transition: all 0.2s ease;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
@@ -452,19 +452,19 @@
     }
     
     .data-table {
-        min-width: 800px;
+        min-width: 750px;
     }
     
     .col-nama {
-        min-width: 150px;
+        min-width: 140px;
     }
     
     .col-merk {
-        min-width: 80px;
+        min-width: 70px;
     }
     
     .col-plat {
-        min-width: 110px;
+        min-width: 100px;
     }
 }
 
@@ -474,29 +474,29 @@
     }
     
     .data-table {
-        min-width: 700px;
+        min-width: 650px;
     }
     
     .action-buttons {
         flex-direction: column;
-        gap: 4px;
+        gap: 3px;
     }
     
     .btn-edit, .btn-delete {
-        width: 28px;
-        height: 28px;
-        font-size: 0.7rem;
+        width: 26px;
+        height: 26px;
+        font-size: 0.65rem;
     }
     
     .mobil-image, .no-image {
-        width: 40px;
-        height: 30px;
+        width: 35px;
+        height: 25px;
     }
     
     .status-badge {
-        padding: 4px 8px;
-        font-size: 0.65rem;
-        min-width: 70px;
+        padding: 3px 6px;
+        font-size: 0.6rem;
+        min-width: 60px;
     }
 }
 </style>
