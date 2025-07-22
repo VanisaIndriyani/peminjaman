@@ -20,7 +20,7 @@
                    onmouseout="this.style.transform='scale(1)'"></i>
                 <div>
                     <div style="font-weight:700;">Telepon</div>
-                    <div style="color:#1976d2;font-size:1.08rem;">+62 896-3693-7394</div>
+                    <div style="color:#1976d2;font-size:1.08rem;">62 896-3693-7394</div>
                     <div style="font-size:0.97rem;color:#4b5563;">Tersedia 24/7 untuk dukungan</div>
                 </div>
             </div>

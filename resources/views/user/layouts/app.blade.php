@@ -688,7 +688,7 @@
                 <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;text-align:left;">
                     Jl. Keranji GG. H. MOH NO.60 RT 04/RW 06 Ciganjur<br>
                     Jagakarsa, Jakarta Selatan. 12630<br>
-                    Telepon: <a href="https://wa.me/6289636937394" style="color:#43d854;text-decoration:none;">+62 896-3693-7394</a><br>
+                    Telepon: <a href="https://wa.me/6289636937394" style="color:#43d854;text-decoration:none;">62 896-3693-7394</a><br>
                     Email: <a href="mailto:mdrentcar22@gmail.com" style="color:#fff;text-decoration:none;">mdrentcar22@gmail.com</a>
                 </div>
             </div>
