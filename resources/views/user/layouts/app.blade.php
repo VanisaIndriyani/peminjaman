@@ -487,7 +487,7 @@
                 <a href="{{ url('/beranda') }}" data-aos="fade-down" data-aos-delay="100"><i class="fa fa-home"></i> Beranda</a>
                 <a href="{{ url('/tentang') }}" data-aos="fade-down" data-aos-delay="200"><i class="fa fa-info-circle"></i> Tentang</a>
                 <a href="{{ url('/katalog') }}" data-aos="fade-down" data-aos-delay="300"><i class="fa fa-list"></i> Katalog</a>
-                <a href="{{ url('/kontak') }}" data-aos="fade-down" data-aos-delay="400"><i class="fa fa-phone"></i> Kontak</a>
+                <a href="{{ url('/kontak') }}" data-aos="fade-down" data-aos-delay="400">Kontak</a>
                 @guest
                     <a href="{{ url('/login') }}" data-aos="fade-down" data-aos-delay="500"><i class="fa fa-user"></i> Masuk</a>
                 @else
@@ -529,7 +529,7 @@
                 <a href="{{ url('/beranda') }}"><i class="fa fa-home"></i> Beranda</a>
                 <a href="{{ url('/tentang') }}"><i class="fa fa-info-circle"></i> Tentang</a>
                 <a href="{{ url('/katalog') }}"><i class="fa fa-list"></i> Katalog</a>
-                <a href="{{ url('/kontak') }}"><i class="fa fa-phone"></i> Kontak</a>
+                <a href="{{ url('/kontak') }}">Kontak</a>
                 @guest
                     <a href="{{ url('/login') }}"><i class="fa fa-user"></i> Masuk</a>
                 @else
@@ -682,8 +682,8 @@
             </div>
             <!-- Informasi Kontak -->
             <div style="flex:1 1 220px;min-width:220px;max-width:320px;" data-aos="fade-up" data-aos-delay="300">
-                <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
-                    <i class="fa fa-car" style="font-size:1.5rem;color:#3b82f6;"></i> Informasi Kontak
+                <div style="font-weight:600;font-size:1.08rem;margin-bottom:12px;">
+                    Informasi Kontak
                 </div>
                 <div style="color:#e0e7ef;font-size:1rem;line-height:1.6;text-align:left;">
                     Jl. Keranji GG. H. MOH NO.60 RT 04/RW 06 Ciganjur<br>

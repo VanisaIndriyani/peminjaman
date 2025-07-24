@@ -96,7 +96,6 @@
                                 <div class="contact-info">
                                     @if($pesan->telepon)
                                         <div class="contact-item">
-                                            <i class="fa fa-phone"></i>
                                             <span>{{ $pesan->telepon }}</span>
                                         </div>
                                     @endif

@@ -12,12 +12,9 @@
              onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 12px 40px rgba(26,35,126,0.15)'" 
              onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 12px rgba(26,35,126,0.08)'">
             
-            <div style="display:flex;align-items:flex-start;gap:16px;transition:all 0.3s ease;padding:12px;border-radius:8px;" 
+            <div style="display:flex;align-items:flex-start;gap:16px;transition:all 0.3s ease;padding:16px;border-radius:8px;" 
                  onmouseover="this.style.background='rgba(25,118,210,0.05)'" 
                  onmouseout="this.style.background='transparent'">
-                <i class="fa fa-phone" style="font-size:1.5rem;color:#1976d2;margin-top:2px;transition:all 0.3s ease;" 
-                   onmouseover="this.style.transform='scale(1.2)'" 
-                   onmouseout="this.style.transform='scale(1)'"></i>
                 <div>
                     <div style="font-weight:700;">Telepon</div>
                     <div style="color:#1976d2;font-size:1.08rem;">62 896-3693-7394</div>
