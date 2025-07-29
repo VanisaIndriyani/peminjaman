@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
+use App\Models\Mobil;
 
 class PeminjamanController extends Controller
 {
@@ -23,11 +24,14 @@ class PeminjamanController extends Controller
 
     public function aksi(Request $request, $id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman = Peminjaman::with('mobil')->findOrFail($id);
         $aksi = $request->input('aksi');
+        
         if (in_array($aksi, ['disetujui', 'ditolak'])) {
             $peminjaman->status = $aksi;
             $peminjaman->save();
+            // Status mobil akan otomatis diupdate oleh model observer
+            
             return redirect()->route('peminjaman.show', $id)->with('success', 'Status peminjaman berhasil diubah.');
         }
         return redirect()->route('peminjaman.show', $id)->with('error', 'Aksi tidak valid.');
@@ -38,10 +42,8 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::with('mobil')->findOrFail($id);
         $peminjaman->status = 'kembali';
         $peminjaman->save();
-        if ($peminjaman->mobil) {
-            $peminjaman->mobil->status = 'tersedia';
-            $peminjaman->mobil->save();
-        }
+        // Status mobil akan otomatis diupdate oleh model observer
+        
         // Tambahkan ke tabel pengembalians
         Pengembalian::create([
             'peminjaman_id' => $peminjaman->id,
@@ -56,10 +58,8 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::with('mobil')->findOrFail($id);
         $peminjaman->status = 'kembali';
         $peminjaman->save();
-        if ($peminjaman->mobil) {
-            $peminjaman->mobil->status = 'tersedia';
-            $peminjaman->mobil->save();
-        }
+        // Status mobil akan otomatis diupdate oleh model observer
+        
         // Tambahkan ke tabel pengembalians
         Pengembalian::create([
             'peminjaman_id' => $peminjaman->id,
@@ -71,10 +71,11 @@ class PeminjamanController extends Controller
 
     public function destroy($id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman = Peminjaman::with('mobil')->findOrFail($id);
         
         // Hapus data peminjaman
         $peminjaman->delete();
+        // Status mobil akan otomatis diupdate oleh model observer
         
         return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil dihapus.');
     }

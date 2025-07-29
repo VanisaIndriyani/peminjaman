@@ -78,6 +78,16 @@
             </div>
         </div>
     @endif
+
+    @if($availabilityMessage)
+        <div style="background:linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);color:#e65100;padding:16px 20px;border-radius:12px;margin-bottom:20px;border-left:4px solid #ff9800;animation:fadeIn 0.5s ease;" 
+             data-aos="fade-up">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <i class="fa fa-exclamation-triangle" style="font-size:1.2rem;"></i>
+                <span>{{ $availabilityMessage }}</span>
+            </div>
+        </div>
+    @endif
     
     <form method="POST" action="{{ url('/peminjaman') }}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:24px;">
         @csrf
@@ -89,6 +99,7 @@
                     <i class="fa fa-calendar" style="color:#1976d2;"></i>Tanggal Pinjam
                 </label>
                 <input type="date" name="tanggal_pinjam" required 
+                       value="{{ $tanggalPinjam ?? '' }}"
                        style="width:100%;padding:14px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:1rem;transition:all 0.3s ease;outline:none;background:#f9fafb;" 
                        onfocus="this.style.borderColor='#1976d2';this.style.background='#fff';this.style.boxShadow='0 0 0 3px rgba(25,118,210,0.1)'" 
                        onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb';this.style.boxShadow='none'">
@@ -98,11 +109,25 @@
                     <i class="fa fa-calendar-check" style="color:#1976d2;"></i>Tanggal Kembali
                 </label>
                 <input type="date" name="tanggal_kembali" required 
+                       value="{{ $tanggalKembali ?? '' }}"
                        style="width:100%;padding:14px 16px;border-radius:10px;border:1.5px solid #e5e7eb;font-size:1rem;transition:all 0.3s ease;outline:none;background:#f9fafb;" 
                        onfocus="this.style.borderColor='#1976d2';this.style.background='#fff';this.style.boxShadow='0 0 0 3px rgba(25,118,210,0.1)'" 
                        onblur="this.style.borderColor='#e5e7eb';this.style.background='#f9fafb';this.style.boxShadow='none'">
             </div>
         </div>
+        
+        <!-- Preview Harga Section -->
+        @if($mobil)
+        <div id="pricePreview" style="background:linear-gradient(135deg, #f0f4ff 0%, #e3f2fd 100%);padding:20px;border-radius:12px;border-left:4px solid #1976d2;transition:all 0.3s ease;" 
+             data-aos="fade-up" data-aos-delay="650">
+            <h3 style="color:#1a237e;font-size:1.1rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                <i class="fa fa-calculator" style="color:#1976d2;"></i>Preview Harga
+            </h3>
+            <div id="priceDetails" style="color:#374151;font-size:0.95rem;">
+                <div style="margin-bottom:8px;">Pilih tanggal untuk melihat perhitungan harga</div>
+            </div>
+        </div>
+        @endif
         
         <!-- File Upload Section -->
         <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 16px; padding: 24px; border: 2px dashed #cbd5e1; transition: all 0.3s ease;" 
@@ -431,6 +456,55 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Price calculation functionality
+    const tanggalPinjam = document.querySelector('input[name="tanggal_pinjam"]');
+    const tanggalKembali = document.querySelector('input[name="tanggal_kembali"]');
+    const priceDetails = document.getElementById('priceDetails');
+    
+    if (tanggalPinjam && tanggalKembali && priceDetails) {
+        const hargaSewa = {{ $mobil->harga_sewa ?? 0 }};
+        const isFirst = {{ \App\Models\Peminjaman::where('user_id', auth()->id())->count() == 0 ? 'true' : 'false' }};
+        
+        function calculatePrice() {
+            const startDate = new Date(tanggalPinjam.value);
+            const endDate = new Date(tanggalKembali.value);
+            
+            if (tanggalPinjam.value && tanggalKembali.value && startDate <= endDate) {
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const totalDays = diffDays === 0 ? 1 : diffDays + 1;
+                
+                const subtotal = hargaSewa * totalDays;
+                const diskon = isFirst ? 10 : 0;
+                const potongan = isFirst ? subtotal * 0.1 : 0;
+                const total = subtotal - potongan;
+                
+                priceDetails.innerHTML = `
+                    <div style="margin-bottom:8px;"><strong>Durasi:</strong> ${totalDays} hari</div>
+                    <div style="margin-bottom:8px;"><strong>Harga per hari:</strong> Rp ${hargaSewa.toLocaleString('id-ID')}</div>
+                    <div style="margin-bottom:8px;"><strong>Subtotal:</strong> Rp ${subtotal.toLocaleString('id-ID')}</div>
+                    ${isFirst ? `<div style="margin-bottom:8px;color:#10b981;"><strong>Diskon:</strong> ${diskon}% pemesanan pertama</div>` : ''}
+                    ${isFirst ? `<div style="margin-bottom:8px;color:#10b981;"><strong>Potongan:</strong> Rp ${potongan.toLocaleString('id-ID')}</div>` : ''}
+                    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #d1d5db;font-weight:600;color:#1a237e;font-size:1.1rem;">
+                        <strong>Total: Rp ${total.toLocaleString('id-ID')}</strong>
+                    </div>
+                `;
+            } else if (tanggalPinjam.value || tanggalKembali.value) {
+                priceDetails.innerHTML = '<div style="color:#ef4444;">Pilih tanggal yang valid</div>';
+            } else {
+                priceDetails.innerHTML = '<div>Pilih tanggal untuk melihat perhitungan harga</div>';
+            }
+        }
+        
+        tanggalPinjam.addEventListener('change', calculatePrice);
+        tanggalKembali.addEventListener('change', calculatePrice);
+        
+        // Calculate initial price if dates are pre-filled
+        if (tanggalPinjam.value && tanggalKembali.value) {
+            calculatePrice();
+        }
+    }
 });
 </script>
 @endsection 

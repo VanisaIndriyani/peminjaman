@@ -59,3 +59,101 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Sistem Peminjaman Mobil MD Rent Car
+
+## Deskripsi
+Sistem peminjaman mobil untuk MD Rent Car yang memungkinkan user untuk melakukan booking mobil secara online.
+
+## Fitur Utama
+
+### Sistem Booking yang Diperbaiki
+Sistem booking telah diperbaiki untuk mengatasi masalah status mobil yang langsung berubah menjadi "tidak tersedia" saat ada booking jauh-jauh hari.
+
+#### Perubahan Utama:
+1. **Status Mobil Tidak Langsung Berubah**: Mobil tetap "tersedia" di katalog meskipun ada booking
+2. **Validasi Berdasarkan Tanggal**: Ketersediaan mobil dicek berdasarkan tanggal booking yang dipilih
+3. **Status Dinamis**: Status mobil hanya berubah saat ada peminjaman yang aktif
+
+#### Cara Kerja:
+- User dapat melihat semua mobil di katalog dengan status "tersedia"
+- Saat user memilih tanggal booking, sistem akan mengecek apakah mobil tersedia di tanggal tersebut
+- Jika ada booking yang overlap dengan tanggal yang dipilih, mobil akan ditandai sebagai "tidak tersedia"
+- Status mobil di katalog hanya berubah menjadi "dipinjam" jika ada peminjaman yang aktif (disetujui atau sedang dipinjam)
+
+#### Keuntungan:
+- User tidak bingung melihat mobil "tidak tersedia" padahal booking masih lama
+- Sistem lebih fleksibel untuk booking jauh-jauh hari
+- Status mobil selalu akurat berdasarkan peminjaman yang aktif
+
+### Command untuk Maintenance
+Untuk memastikan status mobil selalu akurat, gunakan command:
+```bash
+php artisan mobil:update-status
+```
+
+Command ini akan mengupdate status semua mobil berdasarkan peminjaman yang aktif.
+
+## Teknologi
+- Laravel 10
+- PHP 8.1+
+- MySQL
+- Bootstrap
+- Font Awesome
+
+## Instalasi
+1. Clone repository
+2. Install dependencies: `composer install`
+3. Copy `.env.example` ke `.env` dan konfigurasi database
+4. Generate key: `php artisan key:generate`
+5. Jalankan migration: `php artisan migrate`
+6. Jalankan seeder: `php artisan db:seed`
+7. Serve aplikasi: `php artisan serve`
+
+## Struktur Database
+
+### Tabel Mobils
+- `id` - Primary key
+- `nama` - Nama mobil
+- `merk` - Merk mobil
+- `tahun` - Tahun produksi
+- `plat_nomor` - Nomor plat (unique)
+- `harga_sewa` - Harga sewa per hari
+- `status` - Status mobil (tersedia/dipinjam)
+- `foto` - Foto mobil
+
+### Tabel Peminjamans
+- `id` - Primary key
+- `user_id` - Foreign key ke users
+- `mobil_id` - Foreign key ke mobils
+- `tanggal_pinjam` - Tanggal mulai pinjam
+- `tanggal_kembali` - Tanggal kembali
+- `status` - Status peminjaman (menunggu_pembayaran/disetujui/ditolak/dipinjam/kembali)
+- `diskon` - Diskon yang diberikan
+- `total_harga` - Total harga setelah diskon
+- Berkas: `foto_diri`, `ktp`, `kk`, `sim_a`, `ktp_penjamin`
+
+## API Endpoints
+
+### Cek Ketersediaan Mobil
+```
+POST /check-availability
+```
+Body:
+- `mobil_id` - ID mobil
+- `tanggal_pinjam` - Tanggal mulai (YYYY-MM-DD)
+- `tanggal_kembali` - Tanggal kembali (YYYY-MM-DD)
+
+Response:
+```json
+{
+    "available": true/false,
+    "message": "Pesan status ketersediaan"
+}
+```
+
+## Kontribusi
+Silakan buat pull request untuk kontribusi.
+
+## Lisensi
+MIT License

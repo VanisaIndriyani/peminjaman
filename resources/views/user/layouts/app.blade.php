@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>User - Peminjaman Mobil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -487,7 +488,7 @@
                 <a href="{{ url('/beranda') }}" data-aos="fade-down" data-aos-delay="100"><i class="fa fa-home"></i> Beranda</a>
                 <a href="{{ url('/tentang') }}" data-aos="fade-down" data-aos-delay="200"><i class="fa fa-info-circle"></i> Tentang</a>
                 <a href="{{ url('/katalog') }}" data-aos="fade-down" data-aos-delay="300"><i class="fa fa-list"></i> Katalog</a>
-                <a href="{{ url('/kontak') }}" data-aos="fade-down" data-aos-delay="400">Kontak</a>
+                <a href="{{ url('/kontak') }}" data-aos="fade-down" data-aos-delay="400"><i class="fa fa-envelope"></i> Kontak</a>
                 @guest
                     <a href="{{ url('/login') }}" data-aos="fade-down" data-aos-delay="500"><i class="fa fa-user"></i> Masuk</a>
                 @else
@@ -529,7 +530,7 @@
                 <a href="{{ url('/beranda') }}"><i class="fa fa-home"></i> Beranda</a>
                 <a href="{{ url('/tentang') }}"><i class="fa fa-info-circle"></i> Tentang</a>
                 <a href="{{ url('/katalog') }}"><i class="fa fa-list"></i> Katalog</a>
-                <a href="{{ url('/kontak') }}">Kontak</a>
+                <a href="{{ url('/kontak') }}"><i class="fa fa-envelope"></i> Kontak</a>
                 @guest
                     <a href="{{ url('/login') }}"><i class="fa fa-user"></i> Masuk</a>
                 @else

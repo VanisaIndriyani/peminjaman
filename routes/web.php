@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Models\Mobil;
 use App\Http\Controllers\User\PeminjamanController as UserPeminjamanController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('user.beranda');
@@ -43,6 +44,48 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/peminjaman/create', [UserPeminjamanController::class, 'create'])->middleware('auth');
 Route::post('/peminjaman', [UserPeminjamanController::class, 'store'])->middleware('auth');
 Route::get('/riwayat', [App\Http\Controllers\User\RiwayatController::class, 'index'])->middleware('auth');
+
+// Route untuk cek ketersediaan mobil
+Route::post('/check-availability', function (Request $request) {
+    $request->validate([
+        'mobil_id' => 'required|exists:mobils,id',
+        'tanggal_pinjam' => 'required|date',
+        'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
+    ]);
+
+    $mobil = Mobil::find($request->mobil_id);
+    $isAvailable = $mobil->isAvailableForDateRange($request->tanggal_pinjam, $request->tanggal_kembali);
+
+    return response()->json([
+        'available' => $isAvailable,
+        'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih'
+    ]);
+})->name('check.availability');
+
+// Route untuk update status mobil (temporary)
+Route::get('/update-mobil-status', function () {
+    $mobils = \App\Models\Mobil::all();
+    $updatedCount = 0;
+
+    foreach ($mobils as $mobil) {
+        // Cek apakah ada peminjaman aktif untuk mobil ini
+        $peminjamanAktif = \App\Models\Peminjaman::where('mobil_id', $mobil->id)
+            ->whereIn('status', ['menunggu_pembayaran', 'disetujui', 'dipinjam'])
+            ->exists();
+
+        $newStatus = $peminjamanAktif ? 'dipinjam' : 'tersedia';
+        
+        if ($mobil->status !== $newStatus) {
+            $oldStatus = $mobil->status;
+            $mobil->status = $newStatus;
+            $mobil->save();
+            $updatedCount++;
+            echo "Mobil {$mobil->nama} ({$mobil->plat_nomor}) status diubah dari '{$oldStatus}' ke '{$newStatus}'<br>";
+        }
+    }
+
+    echo "Update selesai. {$updatedCount} mobil diperbarui.";
+})->name('update.mobil.status');
 
 // Route Admin
 Route::prefix('admin')->group(function () {
