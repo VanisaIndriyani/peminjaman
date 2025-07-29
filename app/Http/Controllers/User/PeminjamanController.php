@@ -22,8 +22,8 @@ class PeminjamanController extends Controller
         $tanggalKembali = null;
         $availabilityMessage = null;
         
-        if ($request->has('mobil')) {
-            $mobil = Mobil::find($request->mobil);
+        if ($request->has('mobil_id')) {
+            $mobil = Mobil::find($request->mobil_id);
             
             // Cek apakah mobil ada
             if (!$mobil) {

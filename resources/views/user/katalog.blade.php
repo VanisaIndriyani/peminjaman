@@ -38,7 +38,7 @@
                     <div style="font-size:1.4rem;font-weight:800;color:#1976d2;margin-bottom:16px;">
                         Rp {{ number_format($mobil->harga_sewa, 0, ',', '.') }}/hari
                     </div>
-                    <a href="{{ url('/peminjaman/create?mobil=' . $mobil->id) }}" class="btn-book-mobil" data-mobil-id="{{ $mobil->id }}" data-mobil-nama="{{ $mobil->nama }}" style="background:#1976d2;color:#fff;padding:14px 20px;border-radius:10px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:1rem;transition:all 0.3s ease;width:100%;box-sizing:border-box;border:none;cursor:pointer;min-height:48px;" onmouseover="this.style.background='#1565c0';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1976d2';this.style.transform='translateY(0)'">
+                    <a href="{{ url('/peminjaman/create?mobil_id=' . $mobil->id) }}" class="btn-book-mobil" data-mobil-id="{{ $mobil->id }}" data-mobil-nama="{{ $mobil->nama }}" style="background:#1976d2;color:#fff;padding:14px 20px;border-radius:10px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:1rem;transition:all 0.3s ease;width:100%;box-sizing:border-box;border:none;cursor:pointer;min-height:48px;" onmouseover="this.style.background='#1565c0';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1976d2';this.style.transform='translateY(0)'">
                         <i class="fa fa-calendar-plus" style="font-size:1.1rem;"></i>
                         <span>Booking Sekarang</span>
                     </a>
@@ -265,8 +265,12 @@ function checkAvailability() {
     const tanggalPinjam = document.getElementById('tanggalPinjam').value;
     const tanggalKembali = document.getElementById('tanggalKembali').value;
     
-    // Redirect ke halaman booking dengan parameter
-    window.location.href = `/peminjaman/create?mobil=${selectedMobilId}&tanggal_pinjam=${tanggalPinjam}&tanggal_kembali=${tanggalKembali}`;
+    // Use Laravel URL helper for correct path
+    const baseUrl = '{{ url("/peminjaman/create") }}';
+    const redirectUrl = `${baseUrl}?mobil_id=${selectedMobilId}&tanggal_pinjam=${tanggalPinjam}&tanggal_kembali=${tanggalKembali}`;
+    
+    console.log('Redirecting to:', redirectUrl);
+    window.location.href = redirectUrl;
 }
 
 // Close modal when clicking outside
