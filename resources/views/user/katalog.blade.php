@@ -203,22 +203,50 @@ function checkAvailability() {
         });
     }
     
-    // Try main route first, then fallback
+    // Try GET route as final fallback
+    function tryGetRoute() {
+        const params = new URLSearchParams({
+            mobil_id: requestData.mobil_id,
+            tanggal_pinjam: requestData.tanggal_pinjam,
+            tanggal_kembali: requestData.tanggal_kembali
+        });
+        return fetch(`/test-availability?${params}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+    }
+    
+    // Try routes in sequence with better error handling
     tryMainRoute()
         .then(response => {
+            console.log('Main route response status:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .catch(error => {
-            console.log('Main route failed, trying fallback...', error);
+            console.log('Main route failed:', error.message);
             return tryFallbackRoute()
                 .then(response => {
+                    console.log('Fallback route response status:', response.status);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
+                })
+                .catch(error2 => {
+                    console.log('Fallback route failed:', error2.message);
+                    return tryGetRoute()
+                        .then(response => {
+                            console.log('GET route response status:', response.status);
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        });
                 });
         })
         .then(data => {
@@ -241,13 +269,17 @@ function checkAvailability() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('All routes failed:', error);
             resultDiv.innerHTML = `
                 <div style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:16px;border-radius:8px;">
                     <i class="fa fa-exclamation-triangle"></i> <strong>Terjadi Kesalahan</strong><br>
                     Sistem sedang mengalami gangguan. Silakan coba lagi dalam beberapa saat atau hubungi admin.
                     <br><br>
                     <small>Error: ${error.message}</small>
+                    <br><br>
+                    <button onclick="checkAvailability()" style="background:#f59e0b;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-size:0.9rem;">
+                        <i class="fa fa-refresh"></i> Coba Lagi
+                    </button>
                 </div>
             `;
             document.getElementById('btnProceed').style.display = 'none';

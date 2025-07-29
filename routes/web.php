@@ -91,7 +91,43 @@ Route::post('/api/check-availability', function (Request $request) {
             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
         ], 500);
     }
-})->name('api.check.availability');
+})->name('api.check.availability')->middleware('web');
+
+// Route sederhana untuk cek ketersediaan (GET method untuk testing)
+Route::get('/test-availability', function (Request $request) {
+    try {
+        $mobilId = $request->get('mobil_id');
+        $tanggalPinjam = $request->get('tanggal_pinjam');
+        $tanggalKembali = $request->get('tanggal_kembali');
+        
+        if (!$mobilId || !$tanggalPinjam || !$tanggalKembali) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Parameter tidak lengkap'
+            ], 400);
+        }
+
+        $mobil = Mobil::find($mobilId);
+        if (!$mobil) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Mobil tidak ditemukan'
+            ], 404);
+        }
+
+        $isAvailable = $mobil->isAvailableForDateRange($tanggalPinjam, $tanggalKembali);
+
+        return response()->json([
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'available' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
+    }
+})->name('test.availability');
 
 // Route untuk update status mobil (temporary)
 Route::get('/update-mobil-status', function () {
