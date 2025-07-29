@@ -107,6 +107,22 @@
                         <span>Lanjut Booking</span>
                     </button>
                 </div>
+                
+                <!-- Debug buttons for hosting testing -->
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #e5e7eb;">
+                    <p style="color:#666;font-size:0.9rem;margin-bottom:8px;">Debug (untuk testing hosting):</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button onclick="testSimpleRoute()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Test Route
+                        </button>
+                        <button onclick="testMobilRoute()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Test Mobil
+                        </button>
+                        <button onclick="testGetAvailability()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Test GET
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -178,6 +194,8 @@ function checkAvailability() {
         tanggal_kembali: tanggalKembali
     };
     
+    console.log('Checking availability with data:', requestData);
+    
     // Try main route first
     function tryMainRoute() {
         return fetch('/check-availability', {
@@ -200,6 +218,22 @@ function checkAvailability() {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(requestData)
+        });
+    }
+    
+    // Try form data route (lebih kompatibel dengan hosting)
+    function tryFormDataRoute() {
+        const formData = new FormData();
+        formData.append('mobil_id', requestData.mobil_id);
+        formData.append('tanggal_pinjam', requestData.tanggal_pinjam);
+        formData.append('tanggal_kembali', requestData.tanggal_kembali);
+        
+        return fetch('/check-availability-form', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
         });
     }
     
@@ -239,13 +273,24 @@ function checkAvailability() {
                 })
                 .catch(error2 => {
                     console.log('Fallback route failed:', error2.message);
-                    return tryGetRoute()
+                    return tryFormDataRoute()
                         .then(response => {
-                            console.log('GET route response status:', response.status);
+                            console.log('Form data route response status:', response.status);
                             if (!response.ok) {
                                 throw new Error(`HTTP error! status: ${response.status}`);
                             }
                             return response.json();
+                        })
+                        .catch(error3 => {
+                            console.log('Form data route failed:', error3.message);
+                            return tryGetRoute()
+                                .then(response => {
+                                    console.log('GET route response status:', response.status);
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                });
                         });
                 });
         })
@@ -300,6 +345,52 @@ document.getElementById('availabilityModal').addEventListener('click', function(
         closeAvailabilityModal();
     }
 });
+
+// Debug functions for hosting testing
+function testSimpleRoute() {
+    fetch('/test-simple')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Test simple route:', data);
+            alert('Test Route: ' + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.error('Test simple route error:', error);
+            alert('Test Route Error: ' + error.message);
+        });
+}
+
+function testMobilRoute() {
+    fetch('/test-mobil')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Test mobil route:', data);
+            alert('Test Mobil: ' + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.error('Test mobil route error:', error);
+            alert('Test Mobil Error: ' + error.message);
+        });
+}
+
+function testGetAvailability() {
+    const params = new URLSearchParams({
+        mobil_id: selectedMobilId || '1',
+        tanggal_pinjam: '2025-01-01',
+        tanggal_kembali: '2025-01-02'
+    });
+    
+    fetch(`/test-availability?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Test GET availability:', data);
+            alert('Test GET: ' + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.error('Test GET availability error:', error);
+            alert('Test GET Error: ' + error.message);
+        });
+}
 </script>
 
 <style>

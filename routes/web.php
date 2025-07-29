@@ -129,6 +129,94 @@ Route::get('/test-availability', function (Request $request) {
     }
 })->name('test.availability');
 
+// Route untuk cek ketersediaan dengan form data (lebih kompatibel dengan hosting)
+Route::post('/check-availability-form', function (Request $request) {
+    try {
+        // Log untuk debugging
+        \Log::info('Availability check request', [
+            'method' => $request->method(),
+            'headers' => $request->headers->all(),
+            'data' => $request->all()
+        ]);
+
+        $mobilId = $request->input('mobil_id');
+        $tanggalPinjam = $request->input('tanggal_pinjam');
+        $tanggalKembali = $request->input('tanggal_kembali');
+        
+        if (!$mobilId || !$tanggalPinjam || !$tanggalKembali) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Parameter tidak lengkap: mobil_id=' . $mobilId . ', tanggal_pinjam=' . $tanggalPinjam . ', tanggal_kembali=' . $tanggalKembali
+            ], 400);
+        }
+
+        $mobil = Mobil::find($mobilId);
+        if (!$mobil) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Mobil tidak ditemukan dengan ID: ' . $mobilId
+            ], 404);
+        }
+
+        $isAvailable = $mobil->isAvailableForDateRange($tanggalPinjam, $tanggalKembali);
+
+        return response()->json([
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih',
+            'debug' => [
+                'mobil_id' => $mobilId,
+                'tanggal_pinjam' => $tanggalPinjam,
+                'tanggal_kembali' => $tanggalKembali,
+                'mobil_nama' => $mobil->nama
+            ]
+        ]);
+    } catch (\Exception $e) {
+        \Log::error('Availability check error', [
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        
+        return response()->json([
+            'available' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
+    }
+})->name('check.availability.form');
+
+// Route testing sederhana untuk hosting
+Route::get('/test-simple', function () {
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Route berfungsi dengan baik',
+        'timestamp' => now(),
+        'server' => $_SERVER['SERVER_NAME'] ?? 'unknown'
+    ]);
+})->name('test.simple');
+
+// Route testing untuk cek mobil
+Route::get('/test-mobil', function () {
+    try {
+        $mobils = Mobil::all();
+        return response()->json([
+            'status' => 'success',
+            'count' => $mobils->count(),
+            'mobils' => $mobils->map(function($mobil) {
+                return [
+                    'id' => $mobil->id,
+                    'nama' => $mobil->nama,
+                    'plat_nomor' => $mobil->plat_nomor,
+                    'status' => $mobil->status
+                ];
+            })
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+})->name('test.mobil');
+
 // Route untuk update status mobil (temporary)
 Route::get('/update-mobil-status', function () {
     $mobils = \App\Models\Mobil::all();
