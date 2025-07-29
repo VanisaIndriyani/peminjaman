@@ -32,8 +32,9 @@
                     <div style="font-size:1.4rem;font-weight:800;color:#1976d2;margin-bottom:16px;">
                         Rp {{ number_format($mobil->harga_sewa, 0, ',', '.') }}/hari
                     </div>
-                    <a href="{{ url('/peminjaman/create?mobil=' . $mobil->id) }}" class="btn-book-mobil" data-mobil-id="{{ $mobil->id }}" data-mobil-nama="{{ $mobil->nama }}" style="background:#1976d2;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;display:inline-block;font-weight:600;transition:all 0.3s ease;width:100%;text-align:center;" onmouseover="this.style.background='#1565c0'" onmouseout="this.style.background='#1976d2'">
-                        <i class="fa fa-calendar-plus" style="margin-right:8px;"></i>Booking Sekarang
+                    <a href="{{ url('/peminjaman/create?mobil=' . $mobil->id) }}" class="btn-book-mobil" data-mobil-id="{{ $mobil->id }}" data-mobil-nama="{{ $mobil->nama }}" style="background:#1976d2;color:#fff;padding:14px 20px;border-radius:10px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:1rem;transition:all 0.3s ease;width:100%;box-sizing:border-box;border:none;cursor:pointer;min-height:48px;" onmouseover="this.style.background='#1565c0';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1976d2';this.style.transform='translateY(0)'">
+                        <i class="fa fa-calendar-plus" style="font-size:1.1rem;"></i>
+                        <span>Booking Sekarang</span>
                     </a>
                 </div>
             </div>
@@ -57,23 +58,49 @@
         </div>
         
         <div id="modalContent">
-            <p style="color:#666;margin-bottom:20px;">Pilih tanggal untuk mengecek ketersediaan mobil:</p>
-            
-            <div style="margin-bottom:16px;">
-                <label style="display:block;margin-bottom:8px;font-weight:600;color:#333;">Tanggal Mulai:</label>
-                <input type="date" id="tanggalPinjam" style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:1rem;" min="{{ date('Y-m-d') }}">
+            <!-- Login Required Message -->
+            <div id="loginRequired" style="display:none;text-align:center;padding:20px;">
+                <i class="fa fa-user-lock" style="font-size:3rem;color:#1976d2;margin-bottom:16px;"></i>
+                <h4 style="color:#1a237e;font-size:1.2rem;margin-bottom:12px;">Login Diperlukan</h4>
+                <p style="color:#666;margin-bottom:20px;line-height:1.6;">Untuk melakukan booking mobil, Anda harus login terlebih dahulu.</p>
+                <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                    <a href="{{ url('/login') }}" style="background:#1976d2;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fa fa-sign-in-alt"></i>
+                        <span>Login Sekarang</span>
+                    </a>
+                    <a href="{{ url('/register') }}" style="background:#22c55e;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fa fa-user-plus"></i>
+                        <span>Daftar</span>
+                    </a>
+                </div>
             </div>
             
-            <div style="margin-bottom:24px;">
-                <label style="display:block;margin-bottom:8px;font-weight:600;color:#333;">Tanggal Kembali:</label>
-                <input type="date" id="tanggalKembali" style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:1rem;" min="{{ date('Y-m-d') }}">
-            </div>
-            
-            <div id="availabilityResult" style="display:none;margin-bottom:20px;padding:16px;border-radius:8px;"></div>
-            
-            <div style="display:flex;gap:12px;">
-                <button onclick="checkAvailability()" style="background:#1976d2;color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;flex:1;">Cek Ketersediaan</button>
-                <button onclick="proceedToBooking()" id="btnProceed" style="background:#22c55e;color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;flex:1;display:none;">Lanjut Booking</button>
+            <!-- Availability Check Form -->
+            <div id="availabilityForm" style="display:none;">
+                <p style="color:#666;margin-bottom:20px;">Pilih tanggal untuk mengecek ketersediaan mobil:</p>
+                
+                <div style="margin-bottom:16px;">
+                    <label style="display:block;margin-bottom:8px;font-weight:600;color:#333;">Tanggal Mulai:</label>
+                    <input type="date" id="tanggalPinjam" style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:1rem;box-sizing:border-box;" min="{{ date('Y-m-d') }}">
+                </div>
+                
+                <div style="margin-bottom:24px;">
+                    <label style="display:block;margin-bottom:8px;font-weight:600;color:#333;">Tanggal Kembali:</label>
+                    <input type="date" id="tanggalKembali" style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:1rem;box-sizing:border-box;" min="{{ date('Y-m-d') }}">
+                </div>
+                
+                <div id="availabilityResult" style="display:none;margin-bottom:20px;padding:16px;border-radius:8px;"></div>
+                
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <button onclick="checkAvailability()" style="background:#1976d2;color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                        <i class="fa fa-search"></i>
+                        <span>Cek Ketersediaan</span>
+                    </button>
+                    <button onclick="proceedToBooking()" id="btnProceed" style="background:#22c55e;color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;flex:1;min-width:120px;display:none;align-items:center;justify-content:center;gap:8px;">
+                        <i class="fa fa-arrow-right"></i>
+                        <span>Lanjut Booking</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -82,6 +109,7 @@
 <script>
 let selectedMobilId = null;
 let selectedMobilNama = null;
+const isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
 
 // Event listener untuk tombol booking
 document.addEventListener('DOMContentLoaded', function() {
@@ -101,6 +129,15 @@ function openAvailabilityModal() {
     document.getElementById('btnProceed').style.display = 'none';
     document.getElementById('tanggalPinjam').value = '';
     document.getElementById('tanggalKembali').value = '';
+    
+    // Tampilkan form yang sesuai berdasarkan status login
+    if (isLoggedIn) {
+        document.getElementById('loginRequired').style.display = 'none';
+        document.getElementById('availabilityForm').style.display = 'block';
+    } else {
+        document.getElementById('loginRequired').style.display = 'block';
+        document.getElementById('availabilityForm').style.display = 'none';
+    }
 }
 
 function closeAvailabilityModal() {
@@ -126,48 +163,89 @@ function checkAvailability() {
     resultDiv.style.display = 'block';
     resultDiv.innerHTML = '<div style="text-align:center;color:#666;"><i class="fa fa-spinner fa-spin"></i> Mengecek ketersediaan...</div>';
     
-    // Send AJAX request
-    fetch('/check-availability', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            mobil_id: selectedMobilId,
-            tanggal_pinjam: tanggalPinjam,
-            tanggal_kembali: tanggalKembali
+    // Get CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+    
+    const requestData = {
+        mobil_id: selectedMobilId,
+        tanggal_pinjam: tanggalPinjam,
+        tanggal_kembali: tanggalKembali
+    };
+    
+    // Try main route first
+    function tryMainRoute() {
+        return fetch('/check-availability', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+    }
+    
+    // Try fallback route
+    function tryFallbackRoute() {
+        return fetch('/api/check-availability', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+    }
+    
+    // Try main route first, then fallback
+    tryMainRoute()
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.available) {
+        .catch(error => {
+            console.log('Main route failed, trying fallback...', error);
+            return tryFallbackRoute()
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+        })
+        .then(data => {
+            if (data.available) {
+                resultDiv.innerHTML = `
+                    <div style="background:#d1fae5;border:1px solid #10b981;color:#065f46;padding:16px;border-radius:8px;">
+                        <i class="fa fa-check-circle"></i> <strong>Mobil Tersedia!</strong><br>
+                        ${selectedMobilNama} tersedia untuk tanggal ${tanggalPinjam} s/d ${tanggalKembali}
+                    </div>
+                `;
+                document.getElementById('btnProceed').style.display = 'flex';
+            } else {
+                resultDiv.innerHTML = `
+                    <div style="background:#fee2e2;border:1px solid #ef4444;color:#991b1b;padding:16px;border-radius:8px;">
+                        <i class="fa fa-times-circle"></i> <strong>Mobil Tidak Tersedia</strong><br>
+                        ${selectedMobilNama} sudah dibooking untuk tanggal tersebut. Silakan pilih tanggal lain.
+                    </div>
+                `;
+                document.getElementById('btnProceed').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
             resultDiv.innerHTML = `
-                <div style="background:#d1fae5;border:1px solid #10b981;color:#065f46;padding:16px;border-radius:8px;">
-                    <i class="fa fa-check-circle"></i> <strong>Mobil Tersedia!</strong><br>
-                    ${selectedMobilNama} tersedia untuk tanggal ${tanggalPinjam} s/d ${tanggalKembali}
-                </div>
-            `;
-            document.getElementById('btnProceed').style.display = 'block';
-        } else {
-            resultDiv.innerHTML = `
-                <div style="background:#fee2e2;border:1px solid #ef4444;color:#991b1b;padding:16px;border-radius:8px;">
-                    <i class="fa fa-times-circle"></i> <strong>Mobil Tidak Tersedia</strong><br>
-                    ${selectedMobilNama} sudah dibooking untuk tanggal tersebut. Silakan pilih tanggal lain.
+                <div style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:16px;border-radius:8px;">
+                    <i class="fa fa-exclamation-triangle"></i> <strong>Terjadi Kesalahan</strong><br>
+                    Sistem sedang mengalami gangguan. Silakan coba lagi dalam beberapa saat atau hubungi admin.
+                    <br><br>
+                    <small>Error: ${error.message}</small>
                 </div>
             `;
             document.getElementById('btnProceed').style.display = 'none';
-        }
-    })
-    .catch(error => {
-        resultDiv.innerHTML = `
-            <div style="background:#fee2e2;border:1px solid #ef4444;color:#991b1b;padding:16px;border-radius:8px;">
-                <i class="fa fa-exclamation-triangle"></i> <strong>Error</strong><br>
-                Terjadi kesalahan saat mengecek ketersediaan. Silakan coba lagi.
-            </div>
-        `;
-        document.getElementById('btnProceed').style.display = 'none';
-    });
+        });
 }
 
 function proceedToBooking() {
@@ -193,6 +271,24 @@ document.getElementById('availabilityModal').addEventListener('click', function(
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 16px;
     }
+    
+    /* Mobile-specific button styling */
+    .btn-book-mobil {
+        padding: 16px 20px !important;
+        font-size: 1rem !important;
+        min-height: 52px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(25,118,210,0.2) !important;
+    }
+    
+    .btn-book-mobil:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 20px rgba(25,118,210,0.3) !important;
+    }
+    
+    .btn-book-mobil:active {
+        transform: translateY(-1px) !important;
+    }
 }
 
 /* Katalog grid adjustments for mobile */
@@ -200,6 +296,35 @@ document.getElementById('availabilityModal').addEventListener('click', function(
     .katalog-grid {
         grid-template-columns: 1fr;
         gap: 16px;
+    }
+    
+    /* Extra mobile styling */
+    .btn-book-mobil {
+        padding: 18px 24px !important;
+        font-size: 1.1rem !important;
+        min-height: 56px !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Modal adjustments for mobile */
+    #availabilityModal > div {
+        width: 95% !important;
+        max-width: none !important;
+        margin: 20px;
+        padding: 24px !important;
+    }
+    
+    /* Button group in modal */
+    #availabilityForm > div:last-child {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    #availabilityForm > div:last-child > button {
+        width: 100% !important;
+        min-width: auto !important;
+        padding: 16px 24px !important;
+        font-size: 1rem !important;
     }
 }
 
@@ -220,6 +345,27 @@ document.getElementById('availabilityModal').addEventListener('click', function(
 @keyframes slideIn {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+/* Button hover effects */
+.btn-book-mobil {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-book-mobil::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-book-mobil:hover::before {
+    left: 100%;
 }
 </style>
 @endsection 

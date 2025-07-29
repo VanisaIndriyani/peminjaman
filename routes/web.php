@@ -47,20 +47,51 @@ Route::get('/riwayat', [App\Http\Controllers\User\RiwayatController::class, 'ind
 
 // Route untuk cek ketersediaan mobil
 Route::post('/check-availability', function (Request $request) {
-    $request->validate([
-        'mobil_id' => 'required|exists:mobils,id',
-        'tanggal_pinjam' => 'required|date',
-        'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-    ]);
+    try {
+        $request->validate([
+            'mobil_id' => 'required|exists:mobils,id',
+            'tanggal_pinjam' => 'required|date',
+            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
+        ]);
 
-    $mobil = Mobil::find($request->mobil_id);
-    $isAvailable = $mobil->isAvailableForDateRange($request->tanggal_pinjam, $request->tanggal_kembali);
+        $mobil = Mobil::find($request->mobil_id);
+        $isAvailable = $mobil->isAvailableForDateRange($request->tanggal_pinjam, $request->tanggal_kembali);
 
-    return response()->json([
-        'available' => $isAvailable,
-        'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih'
-    ]);
+        return response()->json([
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'available' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
+    }
 })->name('check.availability');
+
+// Route fallback untuk cek ketersediaan (tanpa CSRF)
+Route::post('/api/check-availability', function (Request $request) {
+    try {
+        $request->validate([
+            'mobil_id' => 'required|exists:mobils,id',
+            'tanggal_pinjam' => 'required|date',
+            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
+        ]);
+
+        $mobil = Mobil::find($request->mobil_id);
+        $isAvailable = $mobil->isAvailableForDateRange($request->tanggal_pinjam, $request->tanggal_kembali);
+
+        return response()->json([
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'available' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ], 500);
+    }
+})->name('api.check.availability');
 
 // Route untuk update status mobil (temporary)
 Route::get('/update-mobil-status', function () {
