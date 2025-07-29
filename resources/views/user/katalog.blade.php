@@ -111,6 +111,8 @@
 
                 
 
+                
+
             </div>
         </div>
     </div>
@@ -184,14 +186,14 @@ function checkAvailability() {
     
     console.log('Checking availability with data:', requestData);
     
-    // Try Laravel route
-    function tryLaravelRoute() {
+    // Direct PHP file (most reliable for hosting)
+    function checkAvailabilityDirect() {
         const params = new URLSearchParams({
             mobil_id: requestData.mobil_id,
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
-        return fetch(`/check-avail?${params}`, {
+        return fetch(`/check-avail.php?${params}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -199,10 +201,10 @@ function checkAvailability() {
         });
     }
     
-    // Try Laravel route first
-    tryLaravelRoute()
+    // Use direct PHP file
+    checkAvailabilityDirect()
         .then(response => {
-            console.log('Laravel route response status:', response.status);
+            console.log('PHP file response status:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

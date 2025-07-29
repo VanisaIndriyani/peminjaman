@@ -14,6 +14,12 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
+    # Handle check-avail route specifically
+    RewriteCond %{REQUEST_URI} ^/check-avail
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
     # Handle API routes specifically
     RewriteCond %{REQUEST_URI} ^/api/
     RewriteCond %{REQUEST_FILENAME} !-d
