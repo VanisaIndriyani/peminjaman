@@ -186,30 +186,52 @@ function checkAvailability() {
     
     console.log('Checking availability with data:', requestData);
     
-    // Direct PHP file (most reliable for hosting)
-    function checkAvailabilityDirect() {
+
+    
+    // Try multiple URLs with fallback
+    async function tryMultipleUrls() {
         const params = new URLSearchParams({
             mobil_id: requestData.mobil_id,
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
-        return fetch(`/check-avail.php?${params}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
+        
+        const urls = [
+            '{{ url("/check-avail.php") }}',
+            '{{ url("/") }}/check-avail.php',
+            '/check-avail.php',
+            '/public/check-avail.php',
+            window.location.origin + '/check-avail.php',
+            window.location.origin + '/public/check-avail.php'
+        ];
+        
+        for (let i = 0; i < urls.length; i++) {
+            try {
+                const checkUrl = urls[i] + '?' + params;
+                console.log(`Trying URL ${i + 1}:`, checkUrl);
+                
+                const response = await fetch(checkUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    console.log(`URL ${i + 1} succeeded!`);
+                    return response.json();
+                }
+            } catch (error) {
+                console.log(`URL ${i + 1} failed:`, error.message);
+                continue;
             }
-        });
+        }
+        
+        throw new Error('All URLs failed');
     }
     
-    // Use direct PHP file
-    checkAvailabilityDirect()
-        .then(response => {
-            console.log('PHP file response status:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+    // Use the fallback mechanism
+    tryMultipleUrls()
         .then(data => {
             if (data.available) {
                 resultDiv.innerHTML = `
