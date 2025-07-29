@@ -2,8 +2,14 @@
 
 @section('content')
 <div style="max-width:1200px;margin:0 auto;padding:32px 20px;">
-    <div style="display:flex;align-items:center;margin-bottom:32px;">
-        <i class="fa fa-car" style="margin-right: 16px; color: #1976d2;"></i>Katalog Mobil
+    <div style="display:flex;align-items:center;margin-bottom:32px;background:linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);padding:20px 24px;border-radius:16px;border-left:4px solid #1976d2;box-shadow:0 2px 8px rgba(26,35,126,0.08);">
+        <div style="background:#1976d2;color:#fff;padding:12px;border-radius:12px;margin-right:16px;box-shadow:0 4px 12px rgba(25,118,210,0.3);">
+            <i class="fa fa-car" style="font-size:1.5rem;"></i>
+        </div>
+        <div>
+            <h1 style="font-size:2rem;font-weight:800;color:#1a237e;margin:0;line-height:1.2;">Katalog Mobil</h1>
+            <p style="color:#6b7280;margin:4px 0 0 0;font-size:1rem;">Pilih mobil premium untuk perjalanan Anda</p>
+        </div>
     </div>
 
     @if($mobils->count() > 0)
@@ -289,6 +295,20 @@ document.getElementById('availabilityModal').addEventListener('click', function(
     .btn-book-mobil:active {
         transform: translateY(-1px) !important;
     }
+    
+    /* Mobile header styling */
+    .katalog-header {
+        padding: 16px 20px !important;
+        margin-bottom: 24px !important;
+    }
+    
+    .katalog-header h1 {
+        font-size: 1.6rem !important;
+    }
+    
+    .katalog-header p {
+        font-size: 0.9rem !important;
+    }
 }
 
 /* Katalog grid adjustments for mobile */
@@ -325,6 +345,20 @@ document.getElementById('availabilityModal').addEventListener('click', function(
         min-width: auto !important;
         padding: 16px 24px !important;
         font-size: 1rem !important;
+    }
+    
+    /* Extra mobile header styling */
+    .katalog-header {
+        padding: 12px 16px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .katalog-header h1 {
+        font-size: 1.4rem !important;
+    }
+    
+    .katalog-header p {
+        font-size: 0.85rem !important;
     }
 }
 
