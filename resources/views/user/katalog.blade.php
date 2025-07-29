@@ -108,6 +108,13 @@
                     </button>
                 </div>
                 
+                <!-- Simple test button -->
+                <div style="margin-top:12px;text-align:center;">
+                    <button onclick="testFile()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                        Test File
+                    </button>
+                </div>
+                
 
             </div>
         </div>
@@ -189,7 +196,7 @@ function checkAvailability() {
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
-        return fetch(`/check.php?${params}`, {
+        return fetch(`/avail.php?${params}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -241,9 +248,22 @@ function checkAvailability() {
             `;
             document.getElementById('btnProceed').style.display = 'none';
         });
-}
-
-function proceedToBooking() {
+    }
+    
+    function testFile() {
+        fetch('/ok.php')
+            .then(response => response.text())
+            .then(text => {
+                console.log('Test file response:', text);
+                alert('Test File Response: ' + text);
+            })
+            .catch(error => {
+                console.error('Test file error:', error);
+                alert('Test File Error: ' + error.message);
+            });
+    }
+    
+    function proceedToBooking() {
     const tanggalPinjam = document.getElementById('tanggalPinjam').value;
     const tanggalKembali = document.getElementById('tanggalKembali').value;
     
