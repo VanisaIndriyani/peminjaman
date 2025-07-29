@@ -108,30 +108,7 @@
                     </button>
                 </div>
                 
-                <!-- Debug buttons for hosting testing -->
-                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #e5e7eb;">
-                    <p style="color:#666;font-size:0.9rem;margin-bottom:8px;">Debug (untuk testing hosting):</p>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                        <button onclick="testSimpleRoute()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Test Route
-                        </button>
-                        <button onclick="testMobilRoute()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Test Mobil
-                        </button>
-                        <button onclick="testGetAvailability()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Test GET
-                        </button>
-                        <button onclick="testDirectPHP()" style="background:#dc2626;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Test PHP
-                        </button>
-                        <button onclick="testAvailabilityPHP()" style="background:#059669;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Test Avail
-                        </button>
-                        <button onclick="testMinimal()" style="background:#7c3aed;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                            Minimal
-                        </button>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -205,62 +182,6 @@ function checkAvailability() {
     
     console.log('Checking availability with data:', requestData);
     
-    // Try main route first
-    function tryMainRoute() {
-        return fetch('/check-availability', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        });
-    }
-    
-    // Try fallback route
-    function tryFallbackRoute() {
-        return fetch('/api/check-availability', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestData)
-        });
-    }
-    
-    // Try form data route (lebih kompatibel dengan hosting)
-    function tryFormDataRoute() {
-        const formData = new FormData();
-        formData.append('mobil_id', requestData.mobil_id);
-        formData.append('tanggal_pinjam', requestData.tanggal_pinjam);
-        formData.append('tanggal_kembali', requestData.tanggal_kembali);
-        
-        return fetch('/check-availability-form', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: formData
-        });
-    }
-    
-    // Try GET route as final fallback
-    function tryGetRoute() {
-        const params = new URLSearchParams({
-            mobil_id: requestData.mobil_id,
-            tanggal_pinjam: requestData.tanggal_pinjam,
-            tanggal_kembali: requestData.tanggal_kembali
-        });
-        return fetch(`/test-availability?${params}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-    }
-    
     // Try direct PHP file (bypass Laravel routing)
     function tryDirectPHP() {
         const params = new URLSearchParams({
@@ -268,7 +189,7 @@ function checkAvailability() {
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
-        return fetch(`/availability-check.php?${params}`, {
+        return fetch(`/check.php?${params}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -276,58 +197,14 @@ function checkAvailability() {
         });
     }
     
-    // Try routes in sequence with better error handling
-    tryMainRoute()
+    // Try direct PHP first (most reliable for hosting)
+    tryDirectPHP()
         .then(response => {
-            console.log('Main route response status:', response.status);
+            console.log('Direct PHP response status:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
-        })
-        .catch(error => {
-            console.log('Main route failed:', error.message);
-            return tryFallbackRoute()
-                .then(response => {
-                    console.log('Fallback route response status:', response.status);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .catch(error2 => {
-                    console.log('Fallback route failed:', error2.message);
-                    return tryFormDataRoute()
-                        .then(response => {
-                            console.log('Form data route response status:', response.status);
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .catch(error3 => {
-                            console.log('Form data route failed:', error3.message);
-                            return tryGetRoute()
-                                .then(response => {
-                                    console.log('GET route response status:', response.status);
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP error! status: ${response.status}`);
-                                    }
-                                    return response.json();
-                                })
-                                .catch(error4 => {
-                                    console.log('GET route failed:', error4.message);
-                                    return tryDirectPHP()
-                                        .then(response => {
-                                            console.log('Direct PHP response status:', response.status);
-                                            if (!response.ok) {
-                                                throw new Error(`HTTP error! status: ${response.status}`);
-                                            }
-                                            return response.json();
-                                        });
-                                });
-                        });
-                });
         })
         .then(data => {
             if (data.available) {
@@ -381,139 +258,7 @@ document.getElementById('availabilityModal').addEventListener('click', function(
     }
 });
 
-// Debug functions for hosting testing
-function testSimpleRoute() {
-    // Try Laravel route first
-    fetch('/test-simple')
-        .then(response => response.json())
-        .then(data => {
-            console.log('Test Laravel route:', data);
-            alert('Test Laravel Route: ' + JSON.stringify(data, null, 2));
-        })
-        .catch(error => {
-            console.log('Laravel route failed, trying direct PHP...');
-            // Try direct PHP file
-            fetch('/test-simple.php')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Test direct PHP:', data);
-                    alert('Test Direct PHP: ' + JSON.stringify(data, null, 2));
-                })
-                .catch(error2 => {
-                    console.error('Both routes failed:', error2);
-                    alert('Both Routes Failed: ' + error2.message);
-                });
-        });
-}
 
-function testMobilRoute() {
-    fetch('/test-mobil')
-        .then(response => response.json())
-        .then(data => {
-            console.log('Test mobil route:', data);
-            alert('Test Mobil: ' + JSON.stringify(data, null, 2));
-        })
-        .catch(error => {
-            console.error('Test mobil route error:', error);
-            alert('Test Mobil Error: ' + error.message);
-        });
-}
-
-function testGetAvailability() {
-    const params = new URLSearchParams({
-        mobil_id: selectedMobilId || '1',
-        tanggal_pinjam: '2025-01-01',
-        tanggal_kembali: '2025-01-02'
-    });
-    
-    fetch(`/test-availability?${params}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Test GET availability:', data);
-            alert('Test GET: ' + JSON.stringify(data, null, 2));
-        })
-        .catch(error => {
-            console.error('Test GET availability error:', error);
-            alert('Test GET Error: ' + error.message);
-        });
-}
-
-function testDirectPHP() {
-    // Test simple PHP first
-    fetch('/test-simple.php')
-        .then(response => {
-            console.log('Test simple PHP response status:', response.status);
-            console.log('Test simple PHP response headers:', response.headers);
-            return response.text(); // Get raw response first
-        })
-        .then(text => {
-            console.log('Raw response:', text);
-            try {
-                const data = JSON.parse(text);
-                console.log('Test simple PHP parsed:', data);
-                alert('Test Simple PHP: ' + JSON.stringify(data, null, 2));
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text.substring(0, 200));
-            }
-        })
-        .catch(error => {
-            console.error('Test simple PHP error:', error);
-            alert('Test Simple PHP Error: ' + error.message);
-        });
-}
-
-function testAvailabilityPHP() {
-    const params = new URLSearchParams({
-        mobil_id: selectedMobilId || '1',
-        tanggal_pinjam: '2025-01-01',
-        tanggal_kembali: '2025-01-02'
-    });
-    
-    fetch(`/availability-check.php?${params}`)
-        .then(response => {
-            console.log('Test availability PHP response status:', response.status);
-            return response.text(); // Get raw response first
-        })
-        .then(text => {
-            console.log('Raw availability response:', text);
-            try {
-                const data = JSON.parse(text);
-                console.log('Test availability PHP parsed:', data);
-                alert('Test Availability PHP: ' + JSON.stringify(data, null, 2));
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text.substring(0, 200));
-            }
-        })
-        .catch(error => {
-            console.error('Test availability PHP error:', error);
-            alert('Test Availability PHP Error: ' + error.message);
-        });
-}
-
-function testMinimal() {
-    fetch('/minimal-test.php')
-        .then(response => {
-            console.log('Test minimal response status:', response.status);
-            return response.text();
-        })
-        .then(text => {
-            console.log('Raw minimal response:', text);
-            try {
-                const data = JSON.parse(text);
-                console.log('Test minimal parsed:', data);
-                alert('Test Minimal: ' + JSON.stringify(data, null, 2));
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text);
-            }
-        })
-        .catch(error => {
-            console.error('Test minimal error:', error);
-            alert('Test Minimal Error: ' + error.message);
-        });
-}
 </script>
 
 <style>
