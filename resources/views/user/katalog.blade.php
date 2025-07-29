@@ -124,6 +124,12 @@
                         <button onclick="testDirectPHP()" style="background:#dc2626;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
                             Test PHP
                         </button>
+                        <button onclick="testAvailabilityPHP()" style="background:#059669;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Test Avail
+                        </button>
+                        <button onclick="testMinimal()" style="background:#7c3aed;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Minimal
+                        </button>
                     </div>
                 </div>
             </div>
@@ -433,6 +439,31 @@ function testGetAvailability() {
 }
 
 function testDirectPHP() {
+    // Test simple PHP first
+    fetch('/test-simple.php')
+        .then(response => {
+            console.log('Test simple PHP response status:', response.status);
+            console.log('Test simple PHP response headers:', response.headers);
+            return response.text(); // Get raw response first
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Test simple PHP parsed:', data);
+                alert('Test Simple PHP: ' + JSON.stringify(data, null, 2));
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text.substring(0, 200));
+            }
+        })
+        .catch(error => {
+            console.error('Test simple PHP error:', error);
+            alert('Test Simple PHP Error: ' + error.message);
+        });
+}
+
+function testAvailabilityPHP() {
     const params = new URLSearchParams({
         mobil_id: selectedMobilId || '1',
         tanggal_pinjam: '2025-01-01',
@@ -440,14 +471,47 @@ function testDirectPHP() {
     });
     
     fetch(`/availability-check.php?${params}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Test direct PHP availability:', data);
-            alert('Test Direct PHP: ' + JSON.stringify(data, null, 2));
+        .then(response => {
+            console.log('Test availability PHP response status:', response.status);
+            return response.text(); // Get raw response first
+        })
+        .then(text => {
+            console.log('Raw availability response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Test availability PHP parsed:', data);
+                alert('Test Availability PHP: ' + JSON.stringify(data, null, 2));
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text.substring(0, 200));
+            }
         })
         .catch(error => {
-            console.error('Test direct PHP error:', error);
-            alert('Test Direct PHP Error: ' + error.message);
+            console.error('Test availability PHP error:', error);
+            alert('Test Availability PHP Error: ' + error.message);
+        });
+}
+
+function testMinimal() {
+    fetch('/minimal-test.php')
+        .then(response => {
+            console.log('Test minimal response status:', response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Raw minimal response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Test minimal parsed:', data);
+                alert('Test Minimal: ' + JSON.stringify(data, null, 2));
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                alert('JSON Parse Error: ' + e.message + '\n\nRaw response: ' + text);
+            }
+        })
+        .catch(error => {
+            console.error('Test minimal error:', error);
+            alert('Test Minimal Error: ' + error.message);
         });
 }
 </script>

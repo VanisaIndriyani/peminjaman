@@ -1,5 +1,10 @@
 <?php
-header('Content-Type: application/json');
+// Disable error reporting untuk production
+error_reporting(0);
+ini_set('display_errors', 0);
+
+// Set headers
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -10,16 +15,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// Simple test response first
+if (isset($_GET['test']) && $_GET['test'] === 'simple') {
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'PHP file berfungsi',
+        'timestamp' => date('Y-m-d H:i:s'),
+        'server' => $_SERVER['SERVER_NAME'] ?? 'unknown'
+    ]);
+    exit;
+}
+
 try {
-    // Include Laravel bootstrap
-    require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../bootstrap/app.php';
-    
     // Get parameters
-    $mobilId = $_GET['mobil_id'] ?? $_POST['mobil_id'] ?? null;
-    $tanggalPinjam = $_GET['tanggal_pinjam'] ?? $_POST['tanggal_pinjam'] ?? null;
-    $tanggalKembali = $_GET['tanggal_kembali'] ?? $_POST['tanggal_kembali'] ?? null;
+    $mobilId = $_GET['mobil_id'] ?? null;
+    $tanggalPinjam = $_GET['tanggal_pinjam'] ?? null;
+    $tanggalKembali = $_GET['tanggal_kembali'] ?? null;
     
+    // Validate parameters
     if (!$mobilId || !$tanggalPinjam || !$tanggalKembali) {
         echo json_encode([
             'available' => false,
@@ -27,33 +40,23 @@ try {
             'debug' => [
                 'mobil_id' => $mobilId,
                 'tanggal_pinjam' => $tanggalPinjam,
-                'tanggal_kembali' => $tanggalKembali
+                'tanggal_kembali' => $tanggalKembali,
+                'method' => $_SERVER['REQUEST_METHOD'],
+                'uri' => $_SERVER['REQUEST_URI']
             ]
         ]);
         exit;
     }
 
-    // Get mobil
-    $mobil = \App\Models\Mobil::find($mobilId);
-    if (!$mobil) {
-        echo json_encode([
-            'available' => false,
-            'message' => 'Mobil tidak ditemukan dengan ID: ' . $mobilId
-        ]);
-        exit;
-    }
-
-    // Check availability
-    $isAvailable = $mobil->isAvailableForDateRange($tanggalPinjam, $tanggalKembali);
-
+    // For now, just return a simple response without database
     echo json_encode([
-        'available' => $isAvailable,
-        'message' => $isAvailable ? 'Mobil tersedia untuk tanggal yang dipilih' : 'Mobil tidak tersedia untuk tanggal yang dipilih',
+        'available' => true,
+        'message' => 'Mobil tersedia (test response)',
         'debug' => [
             'mobil_id' => $mobilId,
-            'mobil_nama' => $mobil->nama,
             'tanggal_pinjam' => $tanggalPinjam,
-            'tanggal_kembali' => $tanggalKembali
+            'tanggal_kembali' => $tanggalKembali,
+            'note' => 'Database connection disabled for testing'
         ]
     ]);
     
