@@ -108,12 +108,7 @@
                     </button>
                 </div>
                 
-                <!-- Simple test button -->
-                <div style="margin-top:12px;text-align:center;">
-                    <button onclick="testFile()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
-                        Test File
-                    </button>
-                </div>
+
                 
 
             </div>
@@ -189,14 +184,14 @@ function checkAvailability() {
     
     console.log('Checking availability with data:', requestData);
     
-    // Try direct PHP file (bypass Laravel routing)
-    function tryDirectPHP() {
+    // Try Laravel route
+    function tryLaravelRoute() {
         const params = new URLSearchParams({
             mobil_id: requestData.mobil_id,
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
-        return fetch(`/avail.php?${params}`, {
+        return fetch(`/check-avail?${params}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -204,10 +199,10 @@ function checkAvailability() {
         });
     }
     
-    // Try direct PHP first (most reliable for hosting)
-    tryDirectPHP()
+    // Try Laravel route first
+    tryLaravelRoute()
         .then(response => {
-            console.log('Direct PHP response status:', response.status);
+            console.log('Laravel route response status:', response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -250,18 +245,7 @@ function checkAvailability() {
         });
     }
     
-    function testFile() {
-        fetch('/ok.php')
-            .then(response => response.text())
-            .then(text => {
-                console.log('Test file response:', text);
-                alert('Test File Response: ' + text);
-            })
-            .catch(error => {
-                console.error('Test file error:', error);
-                alert('Test File Error: ' + error.message);
-            });
-    }
+
     
     function proceedToBooking() {
     const tanggalPinjam = document.getElementById('tanggalPinjam').value;
