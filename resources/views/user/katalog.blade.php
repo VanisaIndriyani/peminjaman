@@ -121,6 +121,9 @@
                         <button onclick="testGetAvailability()" style="background:#6b7280;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
                             Test GET
                         </button>
+                        <button onclick="testDirectPHP()" style="background:#dc2626;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:0.8rem;">
+                            Test PHP
+                        </button>
                     </div>
                 </div>
             </div>
@@ -252,6 +255,21 @@ function checkAvailability() {
         });
     }
     
+    // Try direct PHP file (bypass Laravel routing)
+    function tryDirectPHP() {
+        const params = new URLSearchParams({
+            mobil_id: requestData.mobil_id,
+            tanggal_pinjam: requestData.tanggal_pinjam,
+            tanggal_kembali: requestData.tanggal_kembali
+        });
+        return fetch(`/availability-check.php?${params}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+    }
+    
     // Try routes in sequence with better error handling
     tryMainRoute()
         .then(response => {
@@ -290,6 +308,17 @@ function checkAvailability() {
                                         throw new Error(`HTTP error! status: ${response.status}`);
                                     }
                                     return response.json();
+                                })
+                                .catch(error4 => {
+                                    console.log('GET route failed:', error4.message);
+                                    return tryDirectPHP()
+                                        .then(response => {
+                                            console.log('Direct PHP response status:', response.status);
+                                            if (!response.ok) {
+                                                throw new Error(`HTTP error! status: ${response.status}`);
+                                            }
+                                            return response.json();
+                                        });
                                 });
                         });
                 });
@@ -348,15 +377,26 @@ document.getElementById('availabilityModal').addEventListener('click', function(
 
 // Debug functions for hosting testing
 function testSimpleRoute() {
+    // Try Laravel route first
     fetch('/test-simple')
         .then(response => response.json())
         .then(data => {
-            console.log('Test simple route:', data);
-            alert('Test Route: ' + JSON.stringify(data, null, 2));
+            console.log('Test Laravel route:', data);
+            alert('Test Laravel Route: ' + JSON.stringify(data, null, 2));
         })
         .catch(error => {
-            console.error('Test simple route error:', error);
-            alert('Test Route Error: ' + error.message);
+            console.log('Laravel route failed, trying direct PHP...');
+            // Try direct PHP file
+            fetch('/test-simple.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Test direct PHP:', data);
+                    alert('Test Direct PHP: ' + JSON.stringify(data, null, 2));
+                })
+                .catch(error2 => {
+                    console.error('Both routes failed:', error2);
+                    alert('Both Routes Failed: ' + error2.message);
+                });
         });
 }
 
@@ -389,6 +429,25 @@ function testGetAvailability() {
         .catch(error => {
             console.error('Test GET availability error:', error);
             alert('Test GET Error: ' + error.message);
+        });
+}
+
+function testDirectPHP() {
+    const params = new URLSearchParams({
+        mobil_id: selectedMobilId || '1',
+        tanggal_pinjam: '2025-01-01',
+        tanggal_kembali: '2025-01-02'
+    });
+    
+    fetch(`/availability-check.php?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Test direct PHP availability:', data);
+            alert('Test Direct PHP: ' + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+            console.error('Test direct PHP error:', error);
+            alert('Test Direct PHP Error: ' + error.message);
         });
 }
 </script>

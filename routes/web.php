@@ -217,6 +217,49 @@ Route::get('/test-mobil', function () {
     }
 })->name('test.mobil');
 
+// Route availability check yang sangat sederhana
+Route::get('/availability-check', function (Request $request) {
+    header('Content-Type: application/json');
+    
+    try {
+        $mobilId = $request->get('mobil_id');
+        $tanggalPinjam = $request->get('tanggal_pinjam');
+        $tanggalKembali = $request->get('tanggal_kembali');
+        
+        if (!$mobilId || !$tanggalPinjam || !$tanggalKembali) {
+            echo json_encode([
+                'available' => false,
+                'message' => 'Parameter tidak lengkap'
+            ]);
+            return;
+        }
+
+        $mobil = Mobil::find($mobilId);
+        if (!$mobil) {
+            echo json_encode([
+                'available' => false,
+                'message' => 'Mobil tidak ditemukan'
+            ]);
+            return;
+        }
+
+        $isAvailable = $mobil->isAvailableForDateRange($tanggalPinjam, $tanggalKembali);
+
+        echo json_encode([
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia' : 'Mobil tidak tersedia'
+        ]);
+        
+    } catch (\Exception $e) {
+        echo json_encode([
+            'available' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ]);
+    }
+    
+    exit;
+});
+
 // Route untuk update status mobil (temporary)
 Route::get('/update-mobil-status', function () {
     $mobils = \App\Models\Mobil::all();
