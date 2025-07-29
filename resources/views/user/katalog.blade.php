@@ -188,50 +188,40 @@ function checkAvailability() {
     
 
     
-    // Try multiple URLs with fallback
-    async function tryMultipleUrls() {
+    // Simple Laravel route check
+    async function checkAvailabilitySimple() {
         const params = new URLSearchParams({
             mobil_id: requestData.mobil_id,
             tanggal_pinjam: requestData.tanggal_pinjam,
             tanggal_kembali: requestData.tanggal_kembali
         });
         
-        const urls = [
-            '{{ url("/check-avail.php") }}',
-            '{{ url("/") }}/check-avail.php',
-            '/check-avail.php',
-            '/public/check-avail.php',
-            window.location.origin + '/check-avail.php',
-            window.location.origin + '/public/check-avail.php'
-        ];
+        // Use Laravel route
+        const checkUrl = '{{ route("check.avail") }}?' + params;
+        console.log('Checking URL:', checkUrl);
         
-        for (let i = 0; i < urls.length; i++) {
-            try {
-                const checkUrl = urls[i] + '?' + params;
-                console.log(`Trying URL ${i + 1}:`, checkUrl);
-                
-                const response = await fetch(checkUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    console.log(`URL ${i + 1} succeeded!`);
-                    return response.json();
+        try {
+            const response = await fetch(checkUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
-            } catch (error) {
-                console.log(`URL ${i + 1} failed:`, error.message);
-                continue;
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
+            
+            return response.json();
+        } catch (error) {
+            console.error('Error:', error.message);
+            throw error;
         }
-        
-        throw new Error('All URLs failed');
     }
     
-    // Use the fallback mechanism
-    tryMultipleUrls()
+    // Use simple Laravel route
+    checkAvailabilitySimple()
         .then(data => {
             if (data.available) {
                 resultDiv.innerHTML = `

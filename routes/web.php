@@ -12,25 +12,33 @@ use App\Models\Mobil;
 use App\Http\Controllers\User\PeminjamanController as UserPeminjamanController;
 use Illuminate\Http\Request;
 
-// Route availability check yang sangat sederhana (di awal untuk menghindari konflik)
+// Route availability check dengan database
 Route::get('/check-avail', function (Request $request) {
     try {
         $mobilId = $request->get('mobil_id', '1');
         $tanggalPinjam = $request->get('tanggal_pinjam', '2025-01-01');
         $tanggalKembali = $request->get('tanggal_kembali', '2025-01-02');
         
+        // Get mobil
+        $mobil = \App\Models\Mobil::find($mobilId);
+        if (!$mobil) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Mobil tidak ditemukan'
+            ], 404);
+        }
+        
+        // Check availability using model method
+        $isAvailable = $mobil->isAvailableForDateRange($tanggalPinjam, $tanggalKembali);
+        
         return response()->json([
-            'available' => true,
-            'message' => 'Mobil tersedia',
+            'available' => $isAvailable,
+            'message' => $isAvailable ? 'Mobil tersedia' : 'Mobil tidak tersedia',
             'data' => [
                 'mobil_id' => $mobilId,
+                'mobil_nama' => $mobil->nama,
                 'tanggal_pinjam' => $tanggalPinjam,
-                'tanggal_kembali' => $tanggalKembali,
-                'debug' => [
-                    'route' => 'check-avail',
-                    'method' => $request->method(),
-                    'url' => $request->url()
-                ]
+                'tanggal_kembali' => $tanggalKembali
             ]
         ]);
     } catch (\Exception $e) {
